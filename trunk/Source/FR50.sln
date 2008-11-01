@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gurucore.Framework", "Gurucore.Framework\Gurucore.Framework.csproj", "{7DD3B05A-39BF-4D48-8481-2ED9F7714554}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Gurucore.FrameworkTest", "Gurucore.FrameworkTest\Gurucore.FrameworkTest.csproj", "{B45937E6-6730-4FDB-9E73-AA971EA66736}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7DE8155E-B830-45F4-9EF5-3C6104285E74}"
+	ProjectSection(SolutionItems) = preProject
+		Note.txt = Note.txt
+		Todo.txt = Todo.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7DD3B05A-39BF-4D48-8481-2ED9F7714554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DD3B05A-39BF-4D48-8481-2ED9F7714554}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DD3B05A-39BF-4D48-8481-2ED9F7714554}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DD3B05A-39BF-4D48-8481-2ED9F7714554}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B45937E6-6730-4FDB-9E73-AA971EA66736}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B45937E6-6730-4FDB-9E73-AA971EA66736}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B45937E6-6730-4FDB-9E73-AA971EA66736}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B45937E6-6730-4FDB-9E73-AA971EA66736}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

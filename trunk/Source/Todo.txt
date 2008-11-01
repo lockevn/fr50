@@ -1,0 +1,28 @@
+27-10-2008:
+	- Modify Start method of the Application class as follow: [Done]
+		+ Accept multiple parameters as a params array [Done]
+		+ Mechanism for Application capability to subcribe on parameters [Need more investigation]
+	- Refactor Application inheritance tree. [Done]
+		+ Create something like ApplicationFeature which would be aggregated in to Application. [Capability]
+		+ Make Application class sealed. No longer dynamical load needed, only create Application object <?> [OK, sealed]
+		+ Application features should be defined in <application_config> [<capability>]
+		+ Every feature has it own Init function with parameter, from config.xml also [Need more investigation]
+		
+28-10-2008:
+	- Refactor code generation in DTOMakerClassGenerator [Done]
+	- Benchmark JIT and Reflection approach again [Done, JIT is 2 times faster than Reflection and 2 times slower than ADO in the simplest case]
+
+29-10-2008:
+	- Refactor ColumnAttribute. It's in a very naive form now. [Done]
+	- Null management in DTOBase [Done, great serialization implementation]
+	- Extend TableMapper.GetObject to:
+		+ Check null in DTO, need to modify DTOMaker also [Done]
+		+ GenericDTO with full serialization [Done]
+		+ PONO, Null case also [Done]
+		+ Consider between Nullable and boxed type in PONO, including serializable check [Done, It's DTO generator's job. Framework support both]
+	- Expression language with unit test
+31-10-2008:
+	- Option to disable Schema support in GenericDTO. [worth?]
+	  (GenericDTO need schema in case of serialization, otherwise every column value will become string after being serialized)
+	- Implement Join on TableMapper. Idea: new TableMapper<A>().Join(new TableMapper<B>, expJoinCondition, JoinType.Inner).GetObjects() 
+	- DTOGenerator

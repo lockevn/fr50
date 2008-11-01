@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B45937E6-6730-4FDB-9E73-AA971EA66736}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Gurucore.FrameworkTest</RootNamespace>
+    <AssemblyName>Gurucore.FrameworkTest</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=5.2.3.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Configuration\ConfigurationTest.cs" />
+    <Compile Include="Factory\FactoryTest.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Proxy\LogInterceptor.cs" />
+    <Compile Include="Proxy\ProxyTest.cs" />
+    <Compile Include="Proxy\RepeatInterceptor.cs" />
+    <Compile Include="Proxy\SpokemanService.cs" />
+    <Compile Include="Proxy\TimeInterceptor.cs" />
+    <Compile Include="TableMapper\Auto.cs" />
+    <Compile Include="TableMapper\AutoDTO.cs" />
+    <Compile Include="TableMapper\TableMapperTest.cs" />
+    <Compile Include="XmlBinding\City.cs" />
+    <Compile Include="XmlBinding\Country.cs" />
+    <Compile Include="XmlBinding\Language.cs" />
+    <Compile Include="XmlBinding\World.cs" />
+    <Compile Include="XmlBinding\XmlBindingTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Configuration\Config4Test.xml" />
+    <Content Include="Config\System\Config.xml" />
+    <Content Include="Config\System\DataProvider.xml" />
+    <Content Include="Config\System\DataSource.xml" />
+    <Content Include="XmlBinding\Asia.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Gurucore.Framework\Gurucore.Framework.csproj">
+      <Project>{7DD3B05A-39BF-4D48-8481-2ED9F7714554}</Project>
+      <Name>Gurucore.Framework</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

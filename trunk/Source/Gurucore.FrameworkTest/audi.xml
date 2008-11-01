@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GenericDTO>
+  <__schema_map__>AutoID:System.Int32#Brand:System.String#Age:System.Int32#</__schema_map__>
+  <Brand>Audi</Brand>
+  <Age>1</Age>
+</GenericDTO>
