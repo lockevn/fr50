@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.21022</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7DD3B05A-39BF-4D48-8481-2ED9F7714554}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Gurucore.Framework</RootNamespace>
+    <AssemblyName>Gurucore.Framework</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Core\Activation\DynamicActivator.cs" />
+    <Compile Include="Core\Capability.cs" />
+    <Compile Include="Core\CapabilityBase.cs" />
+    <Compile Include="Core\Configuration\ConfigurationBase.cs" />
+    <Compile Include="Core\Factory\FactoryBase.cs" />
+    <Compile Include="Core\Factory\FactoryItemBase.cs" />
+    <Compile Include="Core\FrameworkException.cs" />
+    <Compile Include="Core\JITGeneration\JITClassManager.cs" />
+    <Compile Include="Core\Proxy\AfterCallFailureAttribute.cs" />
+    <Compile Include="Core\Proxy\AfterCallSuccessAttribute.cs" />
+    <Compile Include="Core\Proxy\AfterReturnedAttribute.cs" />
+    <Compile Include="Core\Proxy\BeforeCallingAttribute.cs" />
+    <Compile Include="Core\Proxy\CallWrapperAttribute.cs" />
+    <Compile Include="Core\Proxy\DynamicProxy.cs" />
+    <Compile Include="Core\Application.cs" />
+    <Compile Include="Core\Proxy\InterceptionType.cs" />
+    <Compile Include="Core\Proxy\InterceptAttribute.cs" />
+    <Compile Include="Core\Proxy\InterceptorBase.cs" />
+    <Compile Include="Core\SystemConfiguration.cs" />
+    <Compile Include="Core\Configuration\ConfigurationLoader.cs" />
+    <Compile Include="DataAccess\DataAccessCapability.cs" />
+    <Compile Include="DataAccess\DataAccessConfiguration.cs" />
+    <Compile Include="DataAccess\DataAccessContext.cs" />
+    <Compile Include="DataAccess\DataProvider\DataProviderFactory.cs" />
+    <Compile Include="DataAccess\DataProvider\DataProvider.cs" />
+    <Compile Include="DataAccess\DataSource\ConnectionInfo.cs" />
+    <Compile Include="DataAccess\DataSource\DataSourceFactory.cs" />
+    <Compile Include="DataAccess\DataSource\DataSource.cs" />
+    <Compile Include="DataAccess\DTOBase.cs" />
+    <Compile Include="DataAccess\MappedColumnAttribute.cs" />
+    <Compile Include="DataAccess\Persistence\Aggregation.cs" />
+    <Compile Include="DataAccess\Persistence\GenericDTOMaker.cs" />
+    <Compile Include="DataAccess\Persistence\GenericSqlGenerator.cs" />
+    <Compile Include="DataAccess\Persistence\GenericTableMapper.cs" />
+    <Compile Include="DataAccess\Persistence\QueryLanguage\ConstantOperand.cs" />
+    <Compile Include="DataAccess\Persistence\QueryLanguage\DefaultExpressionMaker.cs" />
+    <Compile Include="DataAccess\Persistence\QueryLanguage\EmptyOperand.cs" />
+    <Compile Include="DataAccess\Persistence\QueryLanguage\Expression.cs" />
+    <Compile Include="DataAccess\Persistence\DTOMakerBase.cs" />
+    <Compile Include="DataAccess\Persistence\DTOMakerClassGenerator.cs" />
+    <Compile Include="DataAccess\Persistence\GenericDTO.cs" />
+    <Compile Include="DataAccess\Persistence\ReflectionDTOMaker.cs" />
+    <Compile Include="DataAccess\Persistence\ReflectionSqlGenerator.cs" />
+    <Compile Include="DataAccess\Persistence\QueryLanguage\ColumnOperand.cs" />
+    <Compile Include="DataAccess\Persistence\QueryLanguage\FunctionOperand.cs" />
+    <Compile Include="DataAccess\Persistence\QueryLanguage\IExpressionMaker.cs" />
+    <Compile Include="DataAccess\Persistence\QueryLanguage\IOperand.cs" />
+    <Compile Include="DataAccess\Persistence\QueryLanguage\Operator.cs" />
+    <Compile Include="DataAccess\Persistence\QueryLanguage\Order.cs" />
+    <Compile Include="DataAccess\Persistence\QueryLanguage\SetOperand.cs" />
+    <Compile Include="DataAccess\Persistence\QueryLanguage\SortType.cs" />
+    <Compile Include="DataAccess\Persistence\QueryLanguage\SqlExpression.cs" />
+    <Compile Include="DataAccess\Persistence\SqlGeneratorBase.cs" />
+    <Compile Include="DataAccess\Persistence\TableInfo.cs" />
+    <Compile Include="DataAccess\Persistence\TableInfoManager.cs" />
+    <Compile Include="DataAccess\Persistence\TableMapper.cs" />
+    <Compile Include="DataAccess\MappedTableAttribute.cs" />
+    <Compile Include="Test\TestCapability.cs" />
+    <Compile Include="Test\TestCaseAttribute.cs" />
+    <Compile Include="Test\TestResult.cs" />
+    <Compile Include="Test\TestRunner.cs" />
+    <Compile Include="Test\TestSuiteBase.cs" />
+    <Compile Include="Core\Util\StringUtil.cs" />
+    <Compile Include="Core\XmlBinding\XmlPropertyAttribute.cs" />
+    <Compile Include="Core\XmlBinding\XmlPropertyType.cs" />
+    <Compile Include="Core\XmlBinding\XmlBinder.cs" />
+    <Compile Include="Core\XmlBinding\XmClassAttribute.cs" />
+    <Compile Include="Core\XmlBinding\XmlSubSequenceAttribute.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Test\TestConfiguration.cs" />
+    <Compile Include="Test\AssertException.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

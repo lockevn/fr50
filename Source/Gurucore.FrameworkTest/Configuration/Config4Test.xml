@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<system class="Gurucore.Framework.Core.SystemConfiguration">
+		<parameter></parameter>
+		<default_locale>en-US</default_locale>
+	</system>
+	<test class="Gurucore.Framework.Test.TestConfiguration">
+		<test_class>Gurucore.FrameworkTest.XmlBinding.XmlBindingTest</test_class>
+		<test_class>Gurucore.FrameworkTest.Configuration.ConfigurationTest</test_class>
+		<log_result>false</log_result>
+	</test>
+</configuration>

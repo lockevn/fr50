@@ -1,0 +1,3 @@
+28-10-2008
+	- Handle Null in DTO: using IsNull table
+	- Handle Null in PONO: using boxed type if column allows null, otherwise use primitive type <Does it make sense in insert case?>

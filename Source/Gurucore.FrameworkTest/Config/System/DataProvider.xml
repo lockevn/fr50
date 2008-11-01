@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data_providers>
+	<data_provider name = 'SQL Server 2000'>
+		<!-- ado -->
+		<assembly></assembly>
+		<connection_class>System.Data.SqlClient.SqlConnection</connection_class>
+		<data_adapter_class>System.Data.SqlClient.SqlDataAdapter</data_adapter_class>
+		<command_class>System.Data.SqlClient.SqlCommand</command_class>
+		<parameter_class>System.Data.SqlClient.SqlParameter</parameter_class>
+		<data_reader_class>System.Data.SqlClient.SqlDataReader</data_reader_class>
+		<transaction_class>System.Data.SqlClient.SqlTransaction</transaction_class>
+		<!-- sql -->
+		<parameter_form>@name</parameter_form>
+		<inline_parameter_form>@name</inline_parameter_form>
+		<unicode_form>N'value'</unicode_form>
+		<latest_identity_statement>SCOPE_IDENTITY()</latest_identity_statement>
+		<allow_batch_query>true</allow_batch_query>
+		<select_template>
+			SELECT TOP #lastrow #order AS __Order,#fieldlist INTO #Temp_1 FROM #table WHERE #filter ORDER BY __Order #normal; DECLARE @TotalRec int; SELECT @TotalRec = #rowcount-(#lastrow-COUNT(*)) FROM #Temp_1; IF @TotalRec &lt; 0 SELECT='' @TotalRec = ''0''; SET='' ROWCOUNT='' @TotalRec=''; SELECT='' * INTO='' #Temp2='' FROM='' #Temp_1='' ORDER='' BY='' __Order='' #reversed=''; SET='' ROWCOUNT='' 0=''; SELECT='' * FROM='' #Temp2='' ORDER='' BY='' __Order='' #normal='';
+		</select_template>
+	</data_provider>
+
+	<data_provider name = 'MySql'>
+		<!-- ado -->
+		<assembly>MySql.Data.dll</assembly>
+		<connection_class>MySql.Data.MySqlClient.MySqlConnection</connection_class>
+		<data_adapter_class>MySql.Data.MySqlClient.MySqlDataAdapter</data_adapter_class>
+		<command_class>MySql.Data.MySqlClient.MySqlCommand</command_class>
+		<parameter_class>MySql.Data.MySqlClient.MySqlParameter</parameter_class>
+		<data_reader_class>MySql.Data.MySqlClient.MySqlDataReader</data_reader_class>
+		<transaction_class>MySql.Data.MySqlClient.MySqlTransaction</transaction_class>
+		<!-- sql -->
+		<parameter_form>@name</parameter_form>
+		<inline_parameter_form>@name</inline_parameter_form>
+		<unicode_form>N'value'</unicode_form>
+		<latest_identity_statement>SCOPE_IDENTITY()</latest_identity_statement>
+		<allow_batch_query>true</allow_batch_query>
+		<select_template>
+			SELECT #column_list FROM #table WHERE #filter ORDER BY #order LIMIT #first_row, #row_count
+		</select_template>
+	</data_provider>
+
+	<data_provider name = 'Oracle 10g'>
+		<!-- ado -->
+		<assembly>System.Data.OracleClient.dll</assembly>
+		<connection_class>System.Data.OracleClient.OracleConnection</connection_class>
+		<data_adapter_class>System.Data.OracleClient.OracleDataAdapter</data_adapter_class>
+		<command_class>System.Data.OracleClient.OracleCommand</command_class>
+		<parameter_class>System.Data.OracleClient.OracleParameter</parameter_class>
+		<data_reader_class>System.Data.OracleClient.OracleDataReader</data_reader_class>
+		<transaction_class>System.Data.OracleClient.OracleTransaction</transaction_class>
+		<!-- sql -->
+		<parameter_form>name</parameter_form>
+		<inline_parameter_form>:name</inline_parameter_form>
+		<unicode_form>'value'</unicode_form>
+		<latest_identity_statement>SCOPE_IDENTITY()</latest_identity_statement>
+		<allow_batch_query>false</allow_batch_query>
+		<select_template></select_template>
+	</data_provider>
+</data_providers>

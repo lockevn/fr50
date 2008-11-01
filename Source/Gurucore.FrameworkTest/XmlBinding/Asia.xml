@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<world>
+	<country name="Vietnam">
+		<language percentage="95">Vietnamese</language>
+		<city population="7000000" is_capital="true">Hanoi</city>
+		<city population="12000000" is_capital="false">Hochiminh City</city>
+		<city population="2000000" is_capital="false">Danang</city>
+	</country>
+	<country name="China">
+		<language percentage="89">Chinese</language>
+		<city population="14000000" is_capital="true">Beijing</city>
+		<city population="16000000" is_capital="false">Shanghai</city>
+		<city population="10000000" is_capital="false">Shenzhen</city>
+		<city population="8000000" is_capital="false">Guangzhou</city>
+		<city population="7000000" is_capital="false">Chengdu</city>
+	</country>
+	<country name="Japan">
+		<language percentage="99">Japanese</language>
+		<city population="18000000" is_capital="true">Tokyo</city>
+		<city population="11000000" is_capital="false">Osaka</city>
+		<city population="9000000" is_capital="false">Nagoya</city>
+	</country>
+	<country name="Korea">
+		<language percentage="100">Korean</language>
+		<city population="16000000" is_capital="true">Seoul</city>
+		<city population="4000000" is_capital="false">Pusan</city>
+	</country>
+	<country name="Taiwan">
+		<language percentage="90">Chinese</language>
+		<city population="5000000" is_capital="true">Tapei</city>
+		<city population="2000000" is_capital="false">Kaohsiung</city>
+	</country>
+</world>
