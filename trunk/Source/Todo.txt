@@ -1,4 +1,4 @@
-27-10-2008:
+27-10-2008: (duongna)
 	- Modify Start method of the Application class as follow: [Done]
 		+ Accept multiple parameters as a params array [Done]
 		+ Mechanism for Application capability to subcribe on parameters [Need more investigation]
@@ -8,11 +8,11 @@
 		+ Application features should be defined in <application_config> [<capability>]
 		+ Every feature has it own Init function with parameter, from config.xml also [Need more investigation]
 		
-28-10-2008:
+28-10-2008: (duongna)
 	- Refactor code generation in DTOMakerClassGenerator [Done]
 	- Benchmark JIT and Reflection approach again [Done, JIT is 2 times faster than Reflection and 2 times slower than ADO in the simplest case]
 
-29-10-2008:
+29-10-2008: (duongna)
 	- Refactor ColumnAttribute. It's in a very naive form now. [Done]
 	- Null management in DTOBase [Done, great serialization implementation]
 	- Extend TableMapper.GetObject to:
@@ -20,9 +20,24 @@
 		+ GenericDTO with full serialization [Done]
 		+ PONO, Null case also [Done]
 		+ Consider between Nullable and boxed type in PONO, including serializable check [Done, It's DTO generator's job. Framework support both]
-	- Expression language with unit test
-31-10-2008:
-	- Option to disable Schema support in GenericDTO. [worth?]
+	- Expression language with unit test on GetObjects: DTO, GenericDTO, PONO [Done]
+31-10-2008: (duongna)
+	- Option to disable Schema support in GenericDTO. [pending]
 	  (GenericDTO need schema in case of serialization, otherwise every column value will become string after being serialized)
-	- Implement Join on TableMapper. Idea: new TableMapper<A>().Join(new TableMapper<B>, expJoinCondition, JoinType.Inner).GetObjects() 
-	- DTOGenerator
+	- Implement Join on TableMapper. Idea: new TableMapper<A>().Join(new TableMapper<B>, expJoinCondition, JoinType.Inner).GetObjects() [Pending]
+01-11-2008: (duongna)
+	- Simple DTOGenerator, (DTO generator should be written in FR50)
+	- New Graphic Test Runner
+	- Overload for GetObjects - now is Select [Done]
+	- Support Select * for GenericDTO [Done]
+	- Rename CRUD method on TableMapper - Persistence layer. (Get, Add, Save, Delete should be reserved for OR layer) [Done]
+	- Random class suffix for generated DTO Maker. [Done, use the same namespace with DTO, like the proxy's solution]
+	  (When we have 2 classes AutoDTO in 2 different namespace, DTOMakerClassGenerator will cause duplicate error)
+	- Option to allow schema translation or not - (datasource level or global level?)
+	  (converion when there is type mismatch between DataReader's schema and DTO's schema
+	   this situation may happen when change to another DB provider, rather than the DB provider which generated the DTO)
+		+ check this option when generated DTOMaker to have optimized code
+		+ check this option on ReflectionDTOMaker
+	- Todo file in other format (excel? google issues tracker?)
+	- Loadtest support. Should use [LoadTest] to mark the method to be meter [Done]
+	- parameter to disable table_prefix on MappedTable. Example: when using INFORMATION_SCHEMA [Done]

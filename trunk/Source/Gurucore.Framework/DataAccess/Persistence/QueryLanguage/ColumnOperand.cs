@@ -2,7 +2,7 @@ using System;
 
 namespace Gurucore.Framework.DataAccess.Persistence.QueryLanguage
 {
-	public class ColumnOperand : IOperand
+	public class ColumnOperand : OperandBase
 	{
 		private string m_sColumnName;
 
@@ -11,7 +11,7 @@ namespace Gurucore.Framework.DataAccess.Persistence.QueryLanguage
 			m_sColumnName = p_sColumnName;
 		}
 
-		public string ToExpressionString(IExpressionMaker p_oExpressionMaker)
+		public override string ToExpressionString(IExpressionMaker p_oExpressionMaker)
 		{
 			return m_sColumnName;
 		}

@@ -12,5 +12,6 @@ namespace Gurucore.Framework.DataAccess.Persistence.QueryLanguage
 		string FormatSingleConstant(float p_fInput);
 		string FormatDoubleConstant(double p_dblInput);
 		string FormatDecimalConstant(decimal p_decInput);
+		string FormatBooleanConstant(bool p_bInput);
 	}
 }

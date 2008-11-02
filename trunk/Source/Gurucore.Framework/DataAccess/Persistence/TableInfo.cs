@@ -32,6 +32,14 @@ namespace Gurucore.Framework.DataAccess.Persistence
 			set { m_bUpdatable = value; }
 		}
 
+		private bool m_bAllowTablePrefix;
+
+		public bool AllowTablePrefix
+		{
+			get { return m_bAllowTablePrefix; }
+			set { m_bAllowTablePrefix = value; }
+		}
+
 		private List<string> m_arrColumn;
 
 		public List<string> Column
@@ -64,11 +72,12 @@ namespace Gurucore.Framework.DataAccess.Persistence
 			set { m_dicProperty = value; }
 		}
 
-		public TableInfo(string p_sTableName, string p_sPrimaryKey, bool p_bUpdatable)
+		public TableInfo(string p_sTableName, string p_sPrimaryKey, bool p_bUpdatable, bool p_bAllowTablePrefix)
 		{
 			m_sTableName = p_sTableName;
 			m_sPrimaryKey = p_sPrimaryKey;
 			m_bUpdatable = p_bUpdatable;
+			m_bAllowTablePrefix = p_bAllowTablePrefix;
 
 			m_arrColumn = new List<string>();
 			m_dicIdentity = new Dictionary<string, bool>();

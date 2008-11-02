@@ -19,45 +19,21 @@ namespace Gurucore.Framework.DataAccess.Persistence
 		{
 		}
 
-		public T GetObject(int p_nObjectID, params string[] p_arrColumn)
+		//SELECT column1, column2,... FROM table WHERE tableID = #id
+		public T Select(int p_nID, params string[] p_arrColumn)
 		{
 			//get current data access context
 			DataAccessConfiguration oDACfg = Application.GetInstance().GetGlobalSharedObject<DataAccessConfiguration>();
 			DataAccessContext oDACtx = DataAccessContext.GetDataAccessContext();
 
-			//get Sql generator
-			SqlGeneratorBase oSqlGenerator = null;
-			if (m_sGenericTable != null)
-			{
-				oSqlGenerator = new GenericSqlGenerator(m_sGenericTable, m_sGenericPrimaryKey);
-			}
-			else
-			{
-				oSqlGenerator = Application.GetInstance().GetGlobalSharedObject<SqlGeneratorBase>(SqlGeneratorBase.CACHE_KEY);
-			}
+			//get SqlGenerator
+			SqlGeneratorBase oSqlGenerator = GetSqlGenerator();
 
-			//obtain DTOMaker
-			DTOMakerBase oDTOMaker = null;
-			if (m_sGenericTable != null)
-			{
-				oDTOMaker = new GenericDTOMaker(m_sGenericTable, m_sGenericPrimaryKey, p_arrColumn);
-			}
-			else
-			{
-				switch (oDACfg.TransformStrategy)
-				{
-					case "JIT":
-						DTOMakerClassGenerator oGenerator = new DTOMakerClassGenerator(typeof(T));
-						oDTOMaker = oGenerator.GetDTOMaker();
-						break;
-					default:
-						oDTOMaker = new ReflectionDTOMaker();
-						break;
-				}
-			}
+			//get DTOMaker
+			DTOMakerBase oDTOMaker = GetDTOMaker(oDACfg.TransformStrategy, p_arrColumn);
 
 			//generate query
-			string sSql = oSqlGenerator.GetRecordSelect<T>(p_nObjectID, p_arrColumn);
+			string sSql = oSqlGenerator.GetRecordSelect<T>(p_nID, p_arrColumn);
 
 			//obtain connection
 			IDbConnection oDbConn = oDACtx.GetConnection();
@@ -69,7 +45,7 @@ namespace Gurucore.Framework.DataAccess.Persistence
 			IDataReader oDataReader = oDbCmd.ExecuteReader();
 
 			//convert IDbDataReader into DTO
-			T[] arrDTOs = oDTOMaker.GetDTO<T>(oDataReader);
+			T[] arrDTOs = oDTOMaker.GetDTO<T>(oDataReader, p_arrColumn);
 			oDataReader.Close();
 			oDACtx.ReturnConnection(oDbConn);
 
@@ -83,28 +59,61 @@ namespace Gurucore.Framework.DataAccess.Persistence
 				return arrDTOs[0];
 			}
 		}
-		
-		public T[] GetObjects(Expression p_expFilter, Order p_oOrder, int p_nFirstRow, int p_nRowCount, params string[] p_arrColumn)
+
+		//NOTHING
+		public T[] Select(params string[] p_arrColumn)
+		{
+			return this.Select(null, null, 0, 0, p_arrColumn);
+		}
+
+		//LIMIT
+		public T[] Select(int p_nFirstRow, int p_nRowCount, params string[] p_arrColumn)
+		{
+			return this.Select(null, null, p_nFirstRow, p_nRowCount, p_arrColumn);
+		}
+
+		//ORDER
+		public T[] Select(Order p_oOrder, params string[] p_arrColumn)
+		{
+			return this.Select(null, p_oOrder, 0, 0, p_arrColumn);
+		}
+
+		//ORDER + LIMIT
+		public T[] Select(Order p_oOrder, int p_nFirstRow, int p_nRowCount, params string[] p_arrColumn)
+		{
+			return this.Select(null, p_oOrder, p_nFirstRow, p_nRowCount, p_arrColumn);
+		}
+
+		//WHERE
+		public T[] Select(Expression p_expFilter, params string[] p_arrColumn)
+		{
+			return this.Select(p_expFilter, null, 0, 0, p_arrColumn);
+		}
+
+		//WHERE + LIMIT
+		public T[] Select(Expression p_expFilter, int p_nFirstRow, int p_nRowCount, params string[] p_arrColumn)
+		{
+			return this.Select(p_expFilter, null, p_nFirstRow, p_nRowCount, p_arrColumn);
+		}
+
+		//WHERE + ORDER
+		public T[] Select(Expression p_expFilter, Order p_oOrder, params string[] p_arrColumn)
+		{
+			return this.Select(p_expFilter, p_oOrder, 0, 0, p_arrColumn);
+		}
+
+		//WHERE + ORDER + LIMIT
+		public T[] Select(Expression p_expFilter, Order p_oOrder, int p_nFirstRow, int p_nRowCount, params string[] p_arrColumn)
 		{
 			//get current data access context
 			DataAccessConfiguration oDACfg = Application.GetInstance().GetGlobalSharedObject<DataAccessConfiguration>();
 			DataAccessContext oDACtx = DataAccessContext.GetDataAccessContext();
 
-			//get Sql generator
-			SqlGeneratorBase oSqlGenerator = Application.GetInstance().GetGlobalSharedObject<SqlGeneratorBase>(SqlGeneratorBase.CACHE_KEY);
+			//get SqlGenerator
+			SqlGeneratorBase oSqlGenerator = GetSqlGenerator();
 
-			//obtain DTOMaker
-			DTOMakerBase oDTOMaker = null;
-			switch (oDACfg.TransformStrategy)
-			{
-				case "JIT":
-					DTOMakerClassGenerator oGenerator = new DTOMakerClassGenerator(typeof(T));
-					oDTOMaker = oGenerator.GetDTOMaker();
-					break;
-				default:
-					oDTOMaker = new ReflectionDTOMaker();
-					break;
-			}
+			//get DTOMaker
+			DTOMakerBase oDTOMaker = GetDTOMaker(oDACfg.TransformStrategy, p_arrColumn);
 
 			//generate query
 			string sSql = oSqlGenerator.GetListSelect<T>(p_expFilter, p_oOrder, p_nFirstRow, p_nRowCount, p_arrColumn);
@@ -119,7 +128,7 @@ namespace Gurucore.Framework.DataAccess.Persistence
 			IDataReader oDataReader = oDbCmd.ExecuteReader();
 
 			//convert IDbDataReader into DTO
-			T[] arrDTOs = oDTOMaker.GetDTO<T>(oDataReader);
+			T[] arrDTOs = oDTOMaker.GetDTO<T>(oDataReader, p_arrColumn);
 			oDataReader.Close();
 			oDACtx.ReturnConnection(oDbConn);
 
@@ -127,44 +136,81 @@ namespace Gurucore.Framework.DataAccess.Persistence
 			return arrDTOs;
 		}
 
-		public T AddObject(T p_oObject)
+		public T Insert(T p_oObject)
 		{
 			return default(T);
 		}
 
-		public int DeleteObject(int p_nObjectID)
+		public int Delete(int p_nObjectID)
 		{
 			return 0;
 		}
 
-		public int DeleteObjects(Expression p_oCriteria)
+		public int Delete(Expression p_oCriteria)
 		{
 			return 0;
 		}
 
-		public int DeleteObject(T p_oObject)
+		public int Delete(T p_oObject)
 		{
 			return 0;
 		}
 
-		public int DeleteObjects(T[] p_arrObject)
+		public int Delete(T[] p_arrObject)
 		{
 			return 0;
 		}
 
-		public int SaveObject(T p_oDTO)
+		public int Update(T p_oDTO)
 		{
 			return 0;
 		}
 
-		public int SaveObjects(T[] p_arrObject)
+		public int Update(T[] p_arrObject)
 		{
 			return 0;
 		}
 
-		public object GetAggregateValue(Expression p_expTarget, Expression p_oCriteria, Aggregation p_oAggregation)
+		public object Aggregate(Expression p_expTarget, Expression p_oCriteria, Aggregation p_oAggregation)
 		{
 			return null;
+		}
+
+		private SqlGeneratorBase GetSqlGenerator()
+		{
+			SqlGeneratorBase oSqlGenerator = null;
+			if (m_sGenericTable != null)
+			{
+				oSqlGenerator = new GenericSqlGenerator(m_sGenericTable, m_sGenericPrimaryKey);
+			}
+			else
+			{
+				oSqlGenerator = Application.GetInstance().GetGlobalSharedObject<SqlGeneratorBase>(SqlGeneratorBase.CACHE_KEY);
+			}
+			return oSqlGenerator;
+		}
+
+		private DTOMakerBase GetDTOMaker(string p_sTransformStrategy, string[] p_arrColumn)
+		{
+			DTOMakerBase oDTOMaker = null;
+			if (m_sGenericTable != null)
+			{
+				oDTOMaker = new GenericDTOMaker(m_sGenericTable, m_sGenericPrimaryKey);
+			}
+			else
+			{
+				switch (p_sTransformStrategy)
+				{
+					case "JIT":
+						DTOMakerClassGenerator oGenerator = new DTOMakerClassGenerator(typeof(T));
+						oDTOMaker = oGenerator.GetDTOMaker();
+						break;
+					default:
+						oDTOMaker = new ReflectionDTOMaker();
+						break;
+				}
+			}
+			return oDTOMaker;
 		}
 	}
 }

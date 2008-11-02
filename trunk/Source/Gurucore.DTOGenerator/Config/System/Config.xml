@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<system class="Gurucore.Framework.Core.SystemConfiguration">
+		<parameter></parameter>
+		<default_locale>en-US</default_locale>
+		<capability assembly="Gurucore.Framework.dll" class="Gurucore.Framework.DataAccess.DataAccessCapability">DataAccess</capability>
+	</system>
+	<data_access class="Gurucore.Framework.DataAccess.DataAccessConfiguration">
+		<sql_generator_assembly></sql_generator_assembly>
+		<sql_generator_class></sql_generator_class>
+		<transform_strategy>Reflection</transform_strategy>
+		<schema_support>true</schema_support>
+	</data_access>
+</configuration>

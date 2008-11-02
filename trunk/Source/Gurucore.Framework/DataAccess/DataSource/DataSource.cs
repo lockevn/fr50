@@ -29,6 +29,24 @@ namespace Gurucore.Framework.DataAccess.DataSource
 			set { m_sTablePrefix = value; }
 		}
 
+		private string m_sDateTimeFormat;
+
+		[XmlProperty(Type = XmlPropertyType.NestedElement)]
+		public string DateTimeFormat
+		{
+			get { return m_sDateTimeFormat; }
+			set { m_sDateTimeFormat = value; }
+		}
+
+		private string m_sNumberFormat;
+
+		[XmlProperty(Type = XmlPropertyType.NestedElement)]
+		public string NumberFormat
+		{
+			get { return m_sNumberFormat; }
+			set { m_sNumberFormat = value; }
+		}
+
 		private Dictionary<string, ConnectionInfo> m_dicConnectionInfo;
 
 		[XmlSubSequence(HashKey = "key")]

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<data_sources caller_assembly_id="04a14371-ecf6-4535-9e94-f40ed6488680">
+	<data_source name="fr50@mars">
+		<provider>MySql</provider>
+		<table_prefix>test_</table_prefix>
+		<date_time_format>yyyy-MM-dd hh:mm:ss</date_time_format>
+		<number_format>en-US</number_format>
+		<connection_info key="server">mars</connection_info>
+		<connection_info key="user id">fr50</connection_info>
+		<connection_info key="password" encrypted="false">fr50</connection_info>
+		<connection_info key="database">fr50</connection_info>
+	</data_source>
+</data_sources>

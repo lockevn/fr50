@@ -42,29 +42,35 @@ namespace Gurucore.Framework.DataAccess
 			}
 		}
 
-		public void SetCurrentDataSource(string p_sDataSource)
+		private string GetAssemblyID(object p_oCaller)
 		{
-			if (p_sDataSource == string.Empty)
+			object[] arrAttr = p_oCaller.GetType().Assembly.GetCustomAttributes(typeof(System.Runtime.InteropServices.GuidAttribute), false);
+			if (arrAttr.Length == 1)
 			{
-				//use system default
-				m_stkDataSource.Push(m_dicDefaultDataSource[string.Empty]);
+				return ((System.Runtime.InteropServices.GuidAttribute)arrAttr[0]).Value;
 			}
 			else
 			{
-				m_stkDataSource.Push(p_sDataSource);
+				return string.Empty;
 			}
 		}
 
-		public void SetCurrentDataSource(string p_sModuleID, string p_sDataSource)
+		public void SetCurrentDataSource(object p_oCaller, string p_sDataSource)
+		{
+			string sAssemblyID = this.GetAssemblyID(p_oCaller);
+			this.SetCurrentDataSource(sAssemblyID, p_sDataSource);
+		}
+
+		public void SetCurrentDataSource(string p_sAssemblyID, string p_sDataSource)
 		{
 			if (p_sDataSource == string.Empty)
 			{
 				//use module default
-				m_stkDataSource.Push(m_dicDefaultDataSource[p_sModuleID]);
+				m_stkDataSource.Push(m_dicDefaultDataSource[p_sAssemblyID]);
 			}
 			else
 			{
-				m_stkDataSource.Push(p_sModuleID + "#" + p_sDataSource);
+				m_stkDataSource.Push(p_sAssemblyID + "#" + p_sDataSource);
 			}
 		}
 
@@ -222,6 +228,22 @@ namespace Gurucore.Framework.DataAccess
 			return sTablePrefix;
 		}
 
+		public string GetDateTimeFormat()
+		{
+			string sCurrentDataSource = m_stkDataSource.Peek();
+			DataSourceFactory oDSFactory = Application.GetInstance().GetGlobalSharedObject<DataSourceFactory>();
+			string sDateTimeFormat = oDSFactory.GetDateTimeFormat(sCurrentDataSource);
+			return sDateTimeFormat;
+		}
+
+		public string GetNumberFormat()
+		{
+			string sCurrentDataSource = m_stkDataSource.Peek();
+			DataSourceFactory oDSFactory = Application.GetInstance().GetGlobalSharedObject<DataSourceFactory>();
+			string sNumberFormat = oDSFactory.GetNumberFormat(sCurrentDataSource);
+			return sNumberFormat;
+		}
+
 		public string GetUnicodeForm()
 		{
 			string sCurrentDataSource = m_stkDataSource.Peek();
@@ -229,6 +251,16 @@ namespace Gurucore.Framework.DataAccess
 			string sProvider = oDSFactory.GetProvider(sCurrentDataSource);
 			DataProviderFactory oDPFactory = Application.GetInstance().GetGlobalSharedObject<DataProviderFactory>();
 			string sReturn = oDPFactory.GetUnicodeForm(sProvider);
+			return sReturn;
+		}
+
+		public string GetBooleanValues()
+		{
+			string sCurrentDataSource = m_stkDataSource.Peek();
+			DataSourceFactory oDSFactory = Application.GetInstance().GetGlobalSharedObject<DataSourceFactory>();
+			string sProvider = oDSFactory.GetProvider(sCurrentDataSource);
+			DataProviderFactory oDPFactory = Application.GetInstance().GetGlobalSharedObject<DataProviderFactory>();
+			string sReturn = oDPFactory.GetBooleanValues(sProvider);
 			return sReturn;
 		}
 

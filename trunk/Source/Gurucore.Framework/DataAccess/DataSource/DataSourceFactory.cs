@@ -40,6 +40,26 @@ namespace Gurucore.Framework.DataAccess.DataSource
 			return oDSInfo.TablePrefix;
 		}
 
+		public string GetDateTimeFormat(string p_sDataSource)
+		{
+			if (null == p_sDataSource)
+			{
+				p_sDataSource = this.GetFactoryAttribute("default");
+			}
+			DataSource oDSInfo = (DataSource)this.GetItem(p_sDataSource);
+			return oDSInfo.DateTimeFormat;
+		}
+
+		public string GetNumberFormat(string p_sDataSource)
+		{
+			if (null == p_sDataSource)
+			{
+				p_sDataSource = this.GetFactoryAttribute("default");
+			}
+			DataSource oDSInfo = (DataSource)this.GetItem(p_sDataSource);
+			return oDSInfo.NumberFormat;
+		}
+
 		public string GetConnectionString(string p_sDataSource)
 		{
 			if (null == p_sDataSource)

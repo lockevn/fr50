@@ -7,16 +7,16 @@ using Gurucore.Framework.Core;
 
 namespace Gurucore.Framework.DataAccess.Persistence.QueryLanguage
 {
-	public class Expression : IOperand
+	public class Expression : OperandBase
 	{
-		private IOperand m_oFirstOperand, m_oSecondOperand;
+		private OperandBase m_oFirstOperand, m_oSecondOperand;
 		private Operator m_oOperator;
 
 		protected Expression()
 		{
 		}
 
-		public Expression(IOperand p_oFirstOperand, Operator p_oOperator, IOperand p_oSecondOperand)
+		public Expression(OperandBase p_oFirstOperand, Operator p_oOperator, OperandBase p_oSecondOperand)
 		{
 			if (p_oOperator.IsUnary())
 			{
@@ -30,7 +30,7 @@ namespace Gurucore.Framework.DataAccess.Persistence.QueryLanguage
 			}
 		}
 
-		public Expression(Operator p_oOperator, IOperand p_oSecondOperand)
+		public Expression(Operator p_oOperator, OperandBase p_oSecondOperand)
 		{
 			if (!p_oOperator.IsUnary())
 			{
@@ -43,7 +43,7 @@ namespace Gurucore.Framework.DataAccess.Persistence.QueryLanguage
 			}
 		}
 
-		public Expression(IOperand p_oFirstOperand, Operator p_oOperator)
+		public Expression(OperandBase p_oFirstOperand, Operator p_oOperator)
 		{
 			if (p_oOperator.IsUnary())
 			{
@@ -57,47 +57,7 @@ namespace Gurucore.Framework.DataAccess.Persistence.QueryLanguage
 			}
 		}
 
-		public Expression And(Expression p_expSecond)
-		{
-			return new Expression(this, Operator.And, p_expSecond);
-		}
-
-		public Expression Or(Expression p_expSecond)
-		{
-			return new Expression(this, Operator.Or, p_expSecond);
-		}
-
-		public Expression Xor(Expression p_expSecond)
-		{
-			return new Expression(this, Operator.Xor, p_expSecond);
-		}
-
-		public Expression Not()
-		{
-			return new Expression(Operator.Not, this);
-		}
-
-		public Expression Add(Expression p_expSecond)
-		{
-			return new Expression(this, Operator.Add, p_expSecond);
-		}
-
-		public Expression Sub(Expression p_expSecond)
-		{
-			return new Expression(this, Operator.Sub, p_expSecond);
-		}
-
-		public Expression Mul(Expression p_expSecond)
-		{
-			return new Expression(this, Operator.Mul, p_expSecond);
-		}
-
-		public Expression Div(Expression p_expSecond)
-		{
-			return new Expression(this, Operator.Div, p_expSecond);
-		}
-
-		public virtual string ToExpressionString(IExpressionMaker p_oExpressionMaker)
+		public override string ToExpressionString(IExpressionMaker p_oExpressionMaker)
 		{
 			if (m_oOperator.IsUnary())
 			{

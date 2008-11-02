@@ -31,5 +31,10 @@ namespace Gurucore.Framework.DataAccess.Persistence.QueryLanguage
 		{
 			return p_decInput.ToString();
 		}
+		
+		public string FormatBooleanConstant(bool p_bInput)
+		{
+			return p_bInput.ToString();
+		}
 	}
 }

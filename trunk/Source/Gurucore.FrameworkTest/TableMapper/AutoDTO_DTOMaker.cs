@@ -2,27 +2,47 @@
 using System.Collections.Generic;
 using System.Data;
 
+using Gurucore.Framework.DataAccess.Persistence;
+
 using Gurucore.FrameworkTest.TableMapper;
 
-namespace Gurucore.Framework.DataAccess.Persistence
+namespace Gurucore.FrameworkTest.TableMapper
 {
-	public class AutoDTO_DTOMaker : DTOMakerBase
+	public sealed class Table_DTOMaker : DTOMakerBase
 	{
-		public AutoDTO_DTOMaker()
+		public Table_DTOMaker()
 		{
 		}
 
-		public override T[] GetDTO<T>(IDataReader p_oReader)
+		public override T[] GetDTO<T>(IDataReader p_oReader, string[] p_arrColumn)
 		{
 			List<T> arrDTO = new List<T>();
+			List<string> arrColumn = null;
+			if (p_arrColumn != null)
+			{
+				arrColumn = new List<string>(p_arrColumn);
+			}
 
 			while (p_oReader.Read())
 			{
-				AutoDTO oDTO = new AutoDTO();
+				Table oDTO = new Table();
 
-				oDTO.AutoID = (Int32)p_oReader["AutoID"];
-				oDTO.Brand = (String)p_oReader["Brand"];
-				oDTO.Age = (Int32)p_oReader["Age"];
+				if (((arrColumn == null) || (arrColumn.Count == 0) || (arrColumn.Contains("TABLE_CATALOG"))) && (p_oReader["TABLE_CATALOG"] != DBNull.Value))
+				{
+					oDTO.TableCatalog = (String)Convert.ChangeType(p_oReader["TABLE_CATALOG"], typeof(String));
+				}
+				if (((arrColumn == null) || (arrColumn.Count == 0) || (arrColumn.Contains("TABLE_SCHEMA"))) && (p_oReader["TABLE_SCHEMA"] != DBNull.Value))
+				{
+					oDTO.TableSchema = (String)Convert.ChangeType(p_oReader["TABLE_SCHEMA"], typeof(String));
+				}
+				if (((arrColumn == null) || (arrColumn.Count == 0) || (arrColumn.Contains("TABLE_NAME"))) && (p_oReader["TABLE_NAME"] != DBNull.Value))
+				{
+					oDTO.TableName = (String)Convert.ChangeType(p_oReader["TABLE_NAME"], typeof(String));
+				}
+				if (((arrColumn == null) || (arrColumn.Count == 0) || (arrColumn.Contains("TABLE_TYPE"))) && (p_oReader["TABLE_TYPE"] != DBNull.Value))
+				{
+					oDTO.TableType = (String)Convert.ChangeType(p_oReader["TABLE_TYPE"], typeof(String));
+				}
 
 				arrDTO.Add((T)Convert.ChangeType(oDTO, typeof(T)));
 			}

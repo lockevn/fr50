@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Gurucore.Framework.DataAccess.Persistence.QueryLanguage
 {
-	public class SetOperand : IOperand
+	public class SetOperand : OperandBase
 	{
 		object[] m_arrElements;
 
@@ -19,9 +19,7 @@ namespace Gurucore.Framework.DataAccess.Persistence.QueryLanguage
 			m_arrElements = p_arrElements;
 		}
 
-		#region IOperand Members
-
-		public string ToExpressionString(IExpressionMaker p_oExpressionMaker)
+		public override string ToExpressionString(IExpressionMaker p_oExpressionMaker)
 		{
 			string sSet = "(";
 			foreach (object oElement in m_arrElements)
@@ -31,7 +29,5 @@ namespace Gurucore.Framework.DataAccess.Persistence.QueryLanguage
 			sSet = sSet.Substring(0,sSet.Length - 1) + ")";
 			return sSet;
 		}
-
-		#endregion
 	}
 }

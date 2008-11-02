@@ -25,6 +25,13 @@ namespace Gurucore.Framework.Test
 				object[] arrTestCaseAttr = oTestMethod.GetCustomAttributes(typeof(TestCaseAttribute), true);
 				if (arrTestCaseAttr.Length > 0)
 				{
+					bool bLoadTest = ((TestCaseAttribute)arrTestCaseAttr[0]).LoadTest;
+					int nRepeat = ((TestCaseAttribute)arrTestCaseAttr[0]).Repeat;
+					if (nRepeat == 0)
+					{
+						nRepeat = 1;
+					}
+
 					TestResult oTestResult = new TestResult(oTestMethod);
 
 					//check if valid testcase
@@ -32,7 +39,19 @@ namespace Gurucore.Framework.Test
 					{
 						try
 						{
-							oTestMethod.Invoke(m_oTestSuite, null);
+							DateTime dtStart = DateTime.Now;
+							for (int i = 0; i < nRepeat; i++)
+							{
+								oTestMethod.Invoke(m_oTestSuite, null);
+							}
+							if (bLoadTest)
+							{
+								oTestResult.Runtime = DateTime.Now.Subtract(dtStart).TotalMilliseconds;
+							}
+							else
+							{
+								oTestResult.Runtime = 0.0;
+							}
 							oTestResult.Pass = true;
 						}
 						catch (Exception ex)
