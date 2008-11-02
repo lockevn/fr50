@@ -77,7 +77,7 @@ namespace Gurucore.Framework.Core.JITGeneration
 						Assembly oAssembly = oResults.CompiledAssembly;
 						Type oType = oAssembly.GetType(p_sClassName);
 
-						m_dicClass.Add(oType.FullName, oType);
+						m_dicClass.Add(p_sClassName, oType);
 
 						return oType;
 					}

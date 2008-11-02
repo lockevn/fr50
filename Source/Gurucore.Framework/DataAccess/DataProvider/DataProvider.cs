@@ -101,6 +101,15 @@ namespace Gurucore.Framework.DataAccess.DataProvider
 			set { m_sUnicodeForm = value; }
 		}
 
+		private string m_sBooleanValues;
+
+		[XmlProperty(Type = XmlPropertyType.NestedElement)]
+		public string BooleanValues
+		{
+			get { return m_sBooleanValues; }
+			set { m_sBooleanValues = value; }
+		}
+
 		private string m_sLatestIdentityStatement;
 
 		[XmlProperty(Type = XmlPropertyType.NestedElement)]

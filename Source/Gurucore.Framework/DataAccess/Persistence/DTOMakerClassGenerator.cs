@@ -12,7 +12,7 @@ namespace Gurucore.Framework.DataAccess.Persistence
 {
 	public class DTOMakerClassGenerator
 	{
-		private Type m_oDTOType;
+		private Type m_oDTOType;		
 
 		public DTOMakerClassGenerator(Type p_oDTOType)
 		{
@@ -22,11 +22,12 @@ namespace Gurucore.Framework.DataAccess.Persistence
 		public DTOMakerBase GetDTOMaker()
 		{
 			JITClassManager oJITClassMgr = Application.GetInstance().GetGlobalSharedObject<JITClassManager>();
-			string sClassName = "Gurucore.Framework.DataAccess.Persistence." + m_oDTOType.Name + "_DTOMaker";
+			string sClassName = m_oDTOType.FullName + "_DTOMaker";
 			string sGeneratedCode = string.Empty;
+
 			if (!oJITClassMgr.IsRegistered(sClassName))
 			{
-				sGeneratedCode = GenerateCode();
+				sGeneratedCode = this.GenerateCode();
 			}
 			Type oType = oJITClassMgr.GetRegisteredClass(sClassName, sGeneratedCode, true);
 
@@ -53,30 +54,38 @@ namespace Gurucore.Framework.DataAccess.Persistence
 			TableInfoManager oTableInfoMgr = Application.GetInstance().GetGlobalSharedObject<TableInfoManager>();
 			TableInfo oTableInfo = oTableInfoMgr.GetTableInfo(m_oDTOType);
 
-			StringBuilder sGeneratedCode = new StringBuilder();
+			StringBuilder oCodeBuilder = new StringBuilder();
+			string sUniqueNumber = (new Random()).Next().ToString();
 
-			sGeneratedCode.Append("using System;\r\n");
-			sGeneratedCode.Append("using System.Collections.Generic;\r\n");
-			sGeneratedCode.Append("using System.Data;\r\n");
-			sGeneratedCode.Append("\r\n");
-			sGeneratedCode.Append("using #dto_namespace;\r\n");
-			sGeneratedCode.Append("\r\n");
-			sGeneratedCode.Append("namespace Gurucore.Framework.DataAccess.Persistence\r\n");
-			sGeneratedCode.Append("{\r\n");
-			sGeneratedCode.Append("	public sealed class #dto_class_DTOMaker : DTOMakerBase\r\n");
-			sGeneratedCode.Append("	{\r\n");
-			sGeneratedCode.Append("		public #dto_class_DTOMaker()\r\n");
-			sGeneratedCode.Append("		{\r\n");
-			sGeneratedCode.Append("		}\r\n");
-			sGeneratedCode.Append("\r\n");
-			sGeneratedCode.Append("		public override T[] GetDTO<T>(IDataReader p_oReader)\r\n");
-			sGeneratedCode.Append("		{\r\n");
-			sGeneratedCode.Append("			List<T> arrDTO = new List<T>();\r\n");
-			sGeneratedCode.Append("\r\n");
-			sGeneratedCode.Append("			while (p_oReader.Read())\r\n");
-			sGeneratedCode.Append("			{\r\n");
-			sGeneratedCode.Append("				#dto_class oDTO = new #dto_class();\r\n");
-			sGeneratedCode.Append("\r\n");
+			oCodeBuilder.Append("using System;\r\n");
+			oCodeBuilder.Append("using System.Collections.Generic;\r\n");
+			oCodeBuilder.Append("using System.Data;\r\n");
+			oCodeBuilder.Append("\r\n");
+			oCodeBuilder.Append("using Gurucore.Framework.DataAccess.Persistence;\r\n");
+			oCodeBuilder.Append("\r\n");
+			oCodeBuilder.Append("using #dto_namespace;\r\n");
+			oCodeBuilder.Append("\r\n");
+			oCodeBuilder.Append("namespace #dto_namespace\r\n");
+			oCodeBuilder.Append("{\r\n");
+			oCodeBuilder.Append("	public sealed class #dto_class_DTOMaker : DTOMakerBase\r\n");
+			oCodeBuilder.Append("	{\r\n");
+			oCodeBuilder.Append("		public #dto_class_DTOMaker()\r\n");
+			oCodeBuilder.Append("		{\r\n");
+			oCodeBuilder.Append("		}\r\n");
+			oCodeBuilder.Append("\r\n");
+			oCodeBuilder.Append("		public override T[] GetDTO<T>(IDataReader p_oReader, string[] p_arrColumn)\r\n");
+			oCodeBuilder.Append("		{\r\n");
+			oCodeBuilder.Append("			List<T> arrDTO = new List<T>();\r\n");
+			oCodeBuilder.Append("			List<string> arrColumn = null;\r\n");
+			oCodeBuilder.Append("			if (p_arrColumn != null)\r\n");
+			oCodeBuilder.Append("			{\r\n");
+			oCodeBuilder.Append("				arrColumn = new List<string>(p_arrColumn);\r\n");
+			oCodeBuilder.Append("			}\r\n");
+			oCodeBuilder.Append("\r\n");
+			oCodeBuilder.Append("			while (p_oReader.Read())\r\n");
+			oCodeBuilder.Append("			{\r\n");
+			oCodeBuilder.Append("				#dto_class oDTO = new #dto_class();\r\n");
+			oCodeBuilder.Append("\r\n");
 
 			foreach (string sColumn in oTableInfo.Column)
 			{
@@ -84,30 +93,33 @@ namespace Gurucore.Framework.DataAccess.Persistence
 				if (oTableInfo.Property[sColumn].PropertyType.IsGenericType)
 				{
 					//Nullable
-					sPropertyType = m_dicNullableMap[oTableInfo.Property[sColumn].PropertyType.GetGenericArguments()[0].Name] + "?";
+					sPropertyType = m_dicNullableMap[oTableInfo.Property[sColumn].PropertyType.GetGenericArguments()[0].Name];
 				}
 				else
 				{
 					sPropertyType = oTableInfo.Property[sColumn].PropertyType.Name;
 				}
-				sGeneratedCode.Append("				if (p_oReader[\"").Append(sColumn).Append("\"] != DBNull.Value)\r\n");
-				sGeneratedCode.Append("				{\r\n");
-				sGeneratedCode.Append("					oDTO.").Append(sColumn).Append(" = (").Append(sPropertyType).Append(")p_oReader[\"").Append(sColumn).Append("\"];\r\n");
-				sGeneratedCode.Append("				}\r\n");
+				oCodeBuilder.Append("				if (((arrColumn == null) || (arrColumn.Count == 0) || (arrColumn.Contains(\"").Append(sColumn).Append("\"))) && (p_oReader[\"").Append(sColumn).Append("\"] != DBNull.Value))\r\n");
+				oCodeBuilder.Append("				{\r\n");
+				oCodeBuilder.Append("					oDTO.").Append(oTableInfo.Property[sColumn].Name).Append(" = (").Append(sPropertyType).Append(")Convert.ChangeType(p_oReader[\"").Append(sColumn).Append("\"],typeof(").Append(sPropertyType).Append("));\r\n");
+				oCodeBuilder.Append("				}\r\n");
 			}
 
-			sGeneratedCode.Append("\r\n");
-			sGeneratedCode.Append("				arrDTO.Add((T)Convert.ChangeType(oDTO, typeof(T)));\r\n");
-			sGeneratedCode.Append("			}\r\n");
-			sGeneratedCode.Append("			return arrDTO.ToArray();\r\n");
-			sGeneratedCode.Append("		}\r\n");
-			sGeneratedCode.Append("	}\r\n");
-			sGeneratedCode.Append("}\r\n");
+			oCodeBuilder.Append("\r\n");
+			oCodeBuilder.Append("				arrDTO.Add((T)Convert.ChangeType(oDTO, typeof(T)));\r\n");
+			oCodeBuilder.Append("			}\r\n");
+			oCodeBuilder.Append("			return arrDTO.ToArray();\r\n");
+			oCodeBuilder.Append("		}\r\n");
+			oCodeBuilder.Append("	}\r\n");
+			oCodeBuilder.Append("}\r\n");
 
-			sGeneratedCode.Replace("#dto_namespace", m_oDTOType.Namespace);
-			sGeneratedCode.Replace("#dto_class", m_oDTOType.Name);
+			oCodeBuilder.Replace("#dto_namespace", m_oDTOType.Namespace);
+			oCodeBuilder.Replace("#dto_class", m_oDTOType.Name);
+			oCodeBuilder.Replace("#unique_number", sUniqueNumber);
 
-			return sGeneratedCode.ToString();
+			//System.Diagnostics.Debug.Write(oCodeBuilder);
+
+			return oCodeBuilder.ToString();
 		}
 	}
 }

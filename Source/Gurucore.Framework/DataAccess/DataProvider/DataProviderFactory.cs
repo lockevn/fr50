@@ -32,12 +32,12 @@ namespace Gurucore.Framework.DataAccess.DataProvider
 
 		}
 
-		public IDbConnection GetDbConnection(string p_sConnStr, string p_sSqlDSName)
+		public IDbConnection GetDbConnection(string p_sConnStr, string p_sDataProviderName)
 		{
-			DataProvider oDSInfo = (DataProvider)this.GetItem(p_sSqlDSName);
+			DataProvider oDataProvider = (DataProvider)this.GetItem(p_sDataProviderName);
 			object[] arrArgs = { p_sConnStr };
 			DynamicActivator oActivator = Application.GetInstance().GetGlobalSharedObject<DynamicActivator>();
-			object oInstance = oActivator.GetObject(oDSInfo.Assembly.NullOrEmpty() ? m_sDefaultDPAssembly : oDSInfo.Assembly, oDSInfo.ConnectionClass, arrArgs);
+			object oInstance = oActivator.GetObject(oDataProvider.Assembly.NullOrEmpty() ? m_sDefaultDPAssembly : oDataProvider.Assembly, oDataProvider.ConnectionClass, arrArgs);
 			return (IDbConnection)oInstance;
 		}
 
@@ -47,13 +47,13 @@ namespace Gurucore.Framework.DataAccess.DataProvider
 			return this.GetDbCommand(p_oConn, sDefaultSqlDS);
 		}
 
-		public IDbCommand GetDbCommand(IDbConnection p_oConn, string p_sSqlDSName)
+		public IDbCommand GetDbCommand(IDbConnection p_oConn, string p_sDataProviderName)
 		{
-			DataProvider oDSInfo = (DataProvider)this.GetItem(p_sSqlDSName);
+			DataProvider oDataProvider = (DataProvider)this.GetItem(p_sDataProviderName);
 			object[] arrArgs = { string.Empty, p_oConn };
 
 			DynamicActivator oActivator = Application.GetInstance().GetGlobalSharedObject<DynamicActivator>();
-			object oInstance = oActivator.GetObject(oDSInfo.Assembly.NullOrEmpty() ? m_sDefaultDPAssembly : oDSInfo.Assembly, oDSInfo.CommandClass, arrArgs);
+			object oInstance = oActivator.GetObject(oDataProvider.Assembly.NullOrEmpty() ? m_sDefaultDPAssembly : oDataProvider.Assembly, oDataProvider.CommandClass, arrArgs);
 			return (IDbCommand)oInstance;
 		}
 
@@ -63,10 +63,10 @@ namespace Gurucore.Framework.DataAccess.DataProvider
 			return this.GetInlineParameterForm(sDefaultSqlDS);
 		}
 
-		public string GetInlineParameterForm(string p_sSqlDSName)
+		public string GetInlineParameterForm(string p_sDataProviderName)
 		{
-			DataProvider oDSInfo = (DataProvider)this.GetItem(p_sSqlDSName);
-			return oDSInfo.InlineParameterForm;
+			DataProvider oDataProvider = (DataProvider)this.GetItem(p_sDataProviderName);
+			return oDataProvider.InlineParameterForm;
 		}
 
 		public string GetParameterForm()
@@ -75,10 +75,10 @@ namespace Gurucore.Framework.DataAccess.DataProvider
 			return this.GetParameterForm(sDefaultSqlDS);
 		}
 
-		public string GetParameterForm(string p_sSqlDSName)
+		public string GetParameterForm(string p_sDataProviderName)
 		{
-			DataProvider oDSInfo = (DataProvider)this.GetItem(p_sSqlDSName);
-			return oDSInfo.ParameterForm;
+			DataProvider oDataProvider = (DataProvider)this.GetItem(p_sDataProviderName);
+			return oDataProvider.ParameterForm;
 		}
 
 		public string GetUnicodeForm()
@@ -87,10 +87,22 @@ namespace Gurucore.Framework.DataAccess.DataProvider
 			return this.GetUnicodeForm(sDefaultSqlDS);
 		}
 
-		public string GetUnicodeForm(string p_sSqlDSName)
+		public string GetUnicodeForm(string p_sDataProviderName)
 		{
-			DataProvider oDSInfo = (DataProvider)this.GetItem(p_sSqlDSName);
-			return oDSInfo.UnicodeForm;
+			DataProvider oDataProvider = (DataProvider)this.GetItem(p_sDataProviderName);
+			return oDataProvider.UnicodeForm;
+		}
+
+		public string GetBooleanValue()
+		{
+			string sDefaultSqlDS = this.GetFactoryAttribute("default");
+			return this.GetBooleanValues(sDefaultSqlDS);
+		}
+
+		public string GetBooleanValues(string p_sDataProviderName)
+		{
+			DataProvider oDataProvider = (DataProvider)this.GetItem(p_sDataProviderName);
+			return oDataProvider.BooleanValues;
 		}
 
 		public string GetLatestIdentityStatement()
@@ -99,10 +111,10 @@ namespace Gurucore.Framework.DataAccess.DataProvider
 			return this.GetLatestIdentityStatement(sDefaultSqlDS);
 		}
 
-		public string GetLatestIdentityStatement(string p_sSqlDSName)
+		public string GetLatestIdentityStatement(string p_sDataProviderName)
 		{
-			DataProvider oDSInfo = (DataProvider)this.GetItem(p_sSqlDSName);
-			return oDSInfo.LatestIdentityStatement;
+			DataProvider oDataProvider = (DataProvider)this.GetItem(p_sDataProviderName);
+			return oDataProvider.LatestIdentityStatement;
 		}
 
 		public bool GetAllowBatchQuery()
@@ -111,10 +123,10 @@ namespace Gurucore.Framework.DataAccess.DataProvider
 			return this.GetAllowBatchQuery(sDefaultSqlDS);
 		}
 
-		public bool GetAllowBatchQuery(string p_sSqlDSName)
+		public bool GetAllowBatchQuery(string p_sDataProviderName)
 		{
-			DataProvider oDSInfo = (DataProvider)this.GetItem(p_sSqlDSName);
-			return oDSInfo.AllowBatchQuery;
+			DataProvider oDataProvider = (DataProvider)this.GetItem(p_sDataProviderName);
+			return oDataProvider.AllowBatchQuery;
 		}
 
 		public string GetSelectTemplate()
@@ -123,10 +135,10 @@ namespace Gurucore.Framework.DataAccess.DataProvider
 			return this.GetSelectTemplate(sDefaultSqlDS);
 		}
 
-		public string GetSelectTemplate(string p_sSqlDSName)
+		public string GetSelectTemplate(string p_sDataProviderName)
 		{
-			DataProvider oDSInfo = (DataProvider)this.GetItem(p_sSqlDSName);
-			return oDSInfo.SelectTemplate.Trim();
+			DataProvider oDataProvider = (DataProvider)this.GetItem(p_sDataProviderName);
+			return oDataProvider.SelectTemplate.Trim();
 		}
 	}
 }

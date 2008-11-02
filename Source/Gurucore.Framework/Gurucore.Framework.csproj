@@ -91,7 +91,7 @@
     <Compile Include="DataAccess\Persistence\QueryLanguage\ColumnOperand.cs" />
     <Compile Include="DataAccess\Persistence\QueryLanguage\FunctionOperand.cs" />
     <Compile Include="DataAccess\Persistence\QueryLanguage\IExpressionMaker.cs" />
-    <Compile Include="DataAccess\Persistence\QueryLanguage\IOperand.cs" />
+    <Compile Include="DataAccess\Persistence\QueryLanguage\OperandBase.cs" />
     <Compile Include="DataAccess\Persistence\QueryLanguage\Operator.cs" />
     <Compile Include="DataAccess\Persistence\QueryLanguage\Order.cs" />
     <Compile Include="DataAccess\Persistence\QueryLanguage\SetOperand.cs" />

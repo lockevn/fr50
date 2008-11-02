@@ -60,6 +60,10 @@
     <Compile Include="Proxy\TimeInterceptor.cs" />
     <Compile Include="TableMapper\Auto.cs" />
     <Compile Include="TableMapper\AutoDTO.cs" />
+    <Compile Include="TableMapper\AutoDTO_DTOMaker.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="TableMapper\Table.cs" />
     <Compile Include="TableMapper\TableMapperTest.cs" />
     <Compile Include="XmlBinding\City.cs" />
     <Compile Include="XmlBinding\Country.cs" />

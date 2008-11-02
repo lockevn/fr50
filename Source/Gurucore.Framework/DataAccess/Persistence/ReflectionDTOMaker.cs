@@ -10,24 +10,40 @@ namespace Gurucore.Framework.DataAccess.Persistence
 {
 	public class ReflectionDTOMaker : DTOMakerBase
 	{
-		public override T[] GetDTO<T>(System.Data.IDataReader p_oReader)
+		public override T[] GetDTO<T>(System.Data.IDataReader p_oReader, string[] p_arrColumn)
 		{
 			List<T> arrDTO = new List<T>();
 			Type oDTOType = typeof(T);
 
 			TableInfoManager oTableInfoMgr = Application.GetInstance().GetGlobalSharedObject<TableInfoManager>();
 			TableInfo oTableInfo = oTableInfoMgr.GetTableInfo(oDTOType);
-			PropertyInfo[] arrProperty = oTableInfo.Property.Values.ToArray<PropertyInfo>();
 
+			int nReadColumn = p_oReader.FieldCount;
 			while (p_oReader.Read())
 			{
 				T oDTO = (T)Activator.CreateInstance(oDTOType);
 
-				foreach (PropertyInfo oProperty in arrProperty)
+				for (int i = 0; i < nReadColumn; i++)
 				{
-					if (p_oReader[oProperty.Name] != DBNull.Value)
+					string sColumn = p_oReader.GetName(i);
+					PropertyInfo oProperty = oTableInfo.Property[sColumn];
+					if (p_oReader[sColumn] != DBNull.Value)
 					{
-						oProperty.SetValue(oDTO, p_oReader[oProperty.Name], null);
+						if (oProperty.PropertyType == p_oReader.GetFieldType(i))
+						{
+							oProperty.SetValue(oDTO, p_oReader[i], null);
+						}
+						else
+						{
+							if (oProperty.PropertyType.IsPrimitive)
+							{
+								oProperty.SetValue(oDTO, Convert.ChangeType(p_oReader[i], oProperty.PropertyType), null);
+							}
+							else if (oProperty.PropertyType.IsGenericType && oProperty.PropertyType.GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
+							{
+								oProperty.SetValue(oDTO, Convert.ChangeType(p_oReader[i], oProperty.PropertyType.GetGenericArguments()[0]), null);
+							}
+						}
 					}
 				}
 				arrDTO.Add(oDTO);

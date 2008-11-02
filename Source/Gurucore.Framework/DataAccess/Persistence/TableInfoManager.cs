@@ -56,7 +56,9 @@ namespace Gurucore.Framework.DataAccess.Persistence
 							sPrimaryKey = sTableName + "ID";
 						}
 
-						TableInfo oTableInfo = new TableInfo(sTableName, sPrimaryKey, ((MappedTableAttribute)arrTableAttr[0]).Updatable);
+						TableInfo oTableInfo = new TableInfo(sTableName, sPrimaryKey,
+							((MappedTableAttribute)arrTableAttr[0]).Updatable,
+							((MappedTableAttribute)arrTableAttr[0]).AllowTablePrefix);
 
 						PropertyInfo[] arrProperty = p_oType.GetProperties();
 						foreach (PropertyInfo oProperty in arrProperty)

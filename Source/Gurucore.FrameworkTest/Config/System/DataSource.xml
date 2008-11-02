@@ -1,22 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <data_sources caller_assembly_id="012d80be-8b2c-4904-b4f1-1637d6c91a3c">
-	<!-- datasources definition for GURUCORE.Portal.Service.Business module, so give id from guid of GURUCORE.Portal.Service.Business.dll -->
 	<data_source name="Test">
 		<provider>MySql</provider>
 		<table_prefix>test_</table_prefix>
+		<date_time_format>yyyy-MM-dd hh:mm:ss</date_time_format>
+		<number_format>en-US</number_format>
 		<connection_info key="server">mars</connection_info>
 		<connection_info key="user id">fr50</connection_info>
 		<connection_info key="password" encrypted="false">fr50</connection_info>
 		<connection_info key="database">fr50</connection_info>
-	</data_source>
-	<data_source name="Portal">
-		<provider>SQL Server 2000</provider>
-		<table_prefix></table_prefix>
-		<connection_info key="data source">192.168.1.1</connection_info>
-		<connection_info key="user id">sa</connection_info>
-		<connection_info key="pwd" encrypted="true">
-			BA2127A27B77F4E8783484859B0AB6DF484E86C8A23A6FD6
-		</connection_info>
-		<connection_info key="initial catalog">FR30</connection_info>
 	</data_source>
 </data_sources>

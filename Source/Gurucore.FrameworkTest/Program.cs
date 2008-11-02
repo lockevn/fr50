@@ -54,6 +54,16 @@ namespace Gurucore.FrameworkTest
 
 		static void Main(string[] args)
 		{
+			/*string[] arrColumn = { "AutoID", "Brand", "Age", "Series", "ExpireDate", "Cylinder", "IsLuxury"};
+			List<string> lstColumn = new List<string>();
+
+			DateTime dtStart = DateTime.Now;
+			for (int i = 0; i < 100000; i++)
+			{
+				lstColumn.Contains("Series");
+			}
+			double dblTime = DateTime.Now.Subtract(dtStart).TotalMilliseconds;*/
+
 			Application.GetInstance().Start(Environment.CurrentDirectory);
 
 			TestConfiguration oTestConfig = Application.GetInstance().GetGlobalSharedObject<TestConfiguration>();
@@ -100,6 +110,12 @@ namespace Gurucore.FrameworkTest
 								Console.Write("[PASS]");
 								SetConsoleTextAttribute(hConsole, 15);
 								Console.Write(" " + oTestResult.TestMethod.Name + " ");
+								if (oTestResult.Runtime > 0.0)
+								{
+									SetConsoleTextAttribute(hConsole, 14);
+									Console.Write("[" + oTestResult.Runtime + "(ms)]");
+									SetConsoleTextAttribute(hConsole, 15);
+								}
 								Console.WriteLine();
 								Console.WriteLine();
 							}

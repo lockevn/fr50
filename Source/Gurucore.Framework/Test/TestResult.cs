@@ -8,7 +8,7 @@ namespace Gurucore.Framework.Test
 {
 	public class TestResult
 	{
-		MethodInfo m_oTestMethod;
+		private MethodInfo m_oTestMethod;
 
 		public MethodInfo TestMethod
 		{
@@ -16,7 +16,7 @@ namespace Gurucore.Framework.Test
 			set { m_oTestMethod = value; }
 		}
 
-		bool m_bPass;
+		private bool m_bPass;
 
 		public bool Pass
 		{
@@ -24,7 +24,7 @@ namespace Gurucore.Framework.Test
 			set { m_bPass = value; }
 		}
 
-		bool m_bFatal;
+		private bool m_bFatal;
 
 		public bool Fatal
 		{
@@ -32,12 +32,20 @@ namespace Gurucore.Framework.Test
 			set { m_bFatal = value; }
 		}
 
-		string m_sMessage;
+		private string m_sMessage;
 
 		public string Message
 		{
 			get { return m_sMessage; }
 			set { m_sMessage = value; }
+		}
+
+		private double m_dblRuntime;
+
+		public double Runtime
+		{
+			get { return m_dblRuntime; }
+			set { m_dblRuntime = value; }
 		}
 
 		public TestResult(MethodInfo p_oTestMethod)

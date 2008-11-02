@@ -1,4 +1,6 @@
-﻿using Gurucore.Framework.DataAccess;
+﻿using System;
+
+using Gurucore.Framework.DataAccess;
 
 namespace Gurucore.FrameworkTest.TableMapper
 {
@@ -9,6 +11,9 @@ namespace Gurucore.FrameworkTest.TableMapper
 		public const string BRAND = "Brand";
 		public const string AGE = "Age";
 		public const string SERIES = "Series";
+		public const string CYLINDER = "Cylinder";
+		public const string EXPIRE_DATE = "ExpireDate";
+		public const string IS_LUXURY = "IsLuxury";
 
 		private int m_nAutoID;
 
@@ -59,6 +64,45 @@ namespace Gurucore.FrameworkTest.TableMapper
 			{
 				this.SetNotNull(AutoDTO.SERIES);
 				m_sSeries = value;
+			}
+		}
+
+		private double m_dblCylinder;
+
+		[MappedColumn]
+		public double Cylinder
+		{
+			get { return m_dblCylinder; }
+			set 
+			{
+				this.SetNotNull(AutoDTO.CYLINDER);
+				m_dblCylinder = value;
+			}
+		}
+
+		private DateTime m_dtExpireDate;
+
+		[MappedColumn]
+		public DateTime ExpireDate
+		{
+			get { return m_dtExpireDate; }
+			set 
+			{
+				this.SetNotNull(AutoDTO.EXPIRE_DATE);
+				m_dtExpireDate = value;
+			}
+		}
+
+		private bool m_bIsLuxury;
+
+		[MappedColumn]
+		public bool IsLuxury
+		{
+			get { return m_bIsLuxury; }
+			set
+			{
+				this.SetNotNull(AutoDTO.IS_LUXURY);
+				m_bIsLuxury = value;
 			}
 		}
 	}

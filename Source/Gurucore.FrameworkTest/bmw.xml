@@ -3,5 +3,8 @@
   <AutoID>0</AutoID>
   <Brand>BMW</Brand>
   <Age>4</Age>
-  <__null_map__>1001</__null_map__>
+  <Cylinder>0</Cylinder>
+  <ExpireDate>1/1/0001 12:00:00 AM</ExpireDate>
+  <IsLuxury>False</IsLuxury>
+  <__null_map__>1001111</__null_map__>
 </AutoDTO>

@@ -28,9 +28,9 @@ namespace Gurucore.Framework.DataAccess
 		{
 		}
 
-        public MappedColumnAttribute(string p_sFieldName, bool p_bIdentity)
+        public MappedColumnAttribute(string p_sColumnName, bool p_bIdentity)
         {
-            m_sColumnName = p_sFieldName;
+            m_sColumnName = p_sColumnName;
 			m_bIdentity = p_bIdentity;
         }
 	}

@@ -1,0 +1,10 @@
+D:\Projects\FR50\Source\DTOGenerator\bin\Debug\DTOGenerator.exe
+D:\Projects\FR50\Source\DTOGenerator\bin\Debug\DTOGenerator.pdb
+D:\Projects\FR50\Source\DTOGenerator\obj\Debug\ResolveAssemblyReference.cache
+D:\Projects\FR50\Source\DTOGenerator\obj\Debug\DTOGenerator.Properties.Resources.resources
+D:\Projects\FR50\Source\DTOGenerator\obj\Debug\DTOGenerator.csproj.GenerateResource.Cache
+D:\Projects\FR50\Source\DTOGenerator\obj\Debug\DTOGenerator.exe
+D:\Projects\FR50\Source\DTOGenerator\obj\Debug\DTOGenerator.pdb
+D:\Projects\FR50\Source\DTOGenerator\obj\Debug\DTOGenerator.MainForm.resources
+D:\Projects\FR50\Source\DTOGenerator\bin\Debug\Gurucore.Framework.dll
+D:\Projects\FR50\Source\DTOGenerator\bin\Debug\Gurucore.Framework.pdb

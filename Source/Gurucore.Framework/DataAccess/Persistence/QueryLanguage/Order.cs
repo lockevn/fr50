@@ -10,6 +10,21 @@ namespace Gurucore.Framework.DataAccess.Persistence.QueryLanguage
 		private Expression m_oExpression;
 		private SortType m_nSort;
 
+		public Order(string p_sColumn)
+			: this(p_sColumn, SortType.Ascending)
+		{
+		}
+
+		public Order(string p_sColumn, SortType p_nSort)
+			: this(new Expression(Operator.Value, new ColumnOperand(p_sColumn)), p_nSort)
+		{
+		}
+
+		public Order(Expression p_oExpression)
+			: this(p_oExpression, SortType.Ascending)
+		{
+		}
+
 		public Order(Expression p_oExpression, SortType p_nSort)
 		{
 			m_oExpression = p_oExpression;
