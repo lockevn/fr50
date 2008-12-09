@@ -8,74 +8,84 @@ namespace Gurucore.Framework.Test
 {
 	public class TestRunner
 	{
-		TestSuiteBase m_oTestSuite;
-
-		public TestRunner(TestSuiteBase p_oTestSuite)
+		public TestRunner()
 		{
-			m_oTestSuite = p_oTestSuite;
 		}
 
-		public IEnumerable<TestResult> Run()
+		public IEnumerable<TestResult> Run(TestSuiteBase p_oTestSuite)
 		{
-			Type oTestSuiteType = m_oTestSuite.GetType();
+			Type oTestSuiteType = p_oTestSuite.GetType();
 			MethodInfo[] arrTestMethod = oTestSuiteType.GetMethods();
 
 			foreach (MethodInfo oTestMethod in arrTestMethod)
 			{
-				object[] arrTestCaseAttr = oTestMethod.GetCustomAttributes(typeof(TestCaseAttribute), true);
-				if (arrTestCaseAttr.Length > 0)
+				TestResult oResult = this.Run(oTestMethod, p_oTestSuite);
+				if (oResult != null)
 				{
-					bool bLoadTest = ((TestCaseAttribute)arrTestCaseAttr[0]).LoadTest;
-					int nRepeat = ((TestCaseAttribute)arrTestCaseAttr[0]).Repeat;
-					if (nRepeat == 0)
-					{
-						nRepeat = 1;
-					}
-
-					TestResult oTestResult = new TestResult(oTestMethod);
-
-					//check if valid testcase
-					if ((oTestMethod.ReturnType == typeof(void)) && (oTestMethod.GetParameters().Length == 0))
-					{
-						try
-						{
-							DateTime dtStart = DateTime.Now;
-							for (int i = 0; i < nRepeat; i++)
-							{
-								oTestMethod.Invoke(m_oTestSuite, null);
-							}
-							if (bLoadTest)
-							{
-								oTestResult.Runtime = DateTime.Now.Subtract(dtStart).TotalMilliseconds;
-							}
-							else
-							{
-								oTestResult.Runtime = 0.0;
-							}
-							oTestResult.Pass = true;
-						}
-						catch (Exception ex)
-						{
-							if (ex.InnerException is AssertException)
-							{
-								oTestResult.Pass = false;
-								oTestResult.Message = ex.InnerException.Message;
-							}
-							else
-							{
-								oTestResult.Fatal = true;
-								oTestResult.Message = ex.InnerException.Message + "\r\n" + ex.InnerException.StackTrace;
-							}
-						}
-					}
-					else
-					{
-						oTestResult.Fatal = true;
-						oTestResult.Message = "Invalid test method. It should be a void method with no parameter";
-					}
-
-					yield return oTestResult;
+					yield return oResult;
 				}
+			}
+		}
+
+		public TestResult Run(MethodInfo p_oTestMethod, object p_oTestSuite)
+		{
+			object[] arrTestCaseAttr = p_oTestMethod.GetCustomAttributes(typeof(TestCaseAttribute), true);
+			if (arrTestCaseAttr.Length > 0)
+			{
+				bool bLoadTest = ((TestCaseAttribute)arrTestCaseAttr[0]).LoadTest;
+				int nRepeat = ((TestCaseAttribute)arrTestCaseAttr[0]).Repeat;
+				if (nRepeat == 0)
+				{
+					nRepeat = 1;
+				}
+
+				TestResult oTestResult = new TestResult(p_oTestMethod);
+
+				//check if valid testcase
+				if ((p_oTestMethod.ReturnType == typeof(void)) && (p_oTestMethod.GetParameters().Length == 0))
+				{
+					try
+					{
+						DateTime dtStart = DateTime.Now;
+						for (int i = 0; i < nRepeat; i++)
+						{
+							p_oTestMethod.Invoke(p_oTestSuite, null);
+						}
+						if (bLoadTest)
+						{
+							oTestResult.Runtime = DateTime.Now.Subtract(dtStart).TotalMilliseconds;
+						}
+						else
+						{
+							oTestResult.Runtime = 0.0;
+						}
+						oTestResult.Pass = true;
+					}
+					catch (Exception ex)
+					{
+						if (ex.InnerException is AssertException)
+						{
+							oTestResult.Pass = false;
+							oTestResult.ErrorMessage = ex.InnerException.Message;
+						}
+						else
+						{
+							oTestResult.Fatal = true;
+							oTestResult.ErrorMessage = ex.InnerException.Message + "\r\n" + ex.InnerException.StackTrace;
+						}
+					}
+				}
+				else
+				{
+					oTestResult.Fatal = true;
+					oTestResult.ErrorMessage = "Invalid test method. It should be a void method with no parameter";
+				}
+
+				return oTestResult;
+			}
+			else
+			{
+				return null;
 			}
 		}
 	}

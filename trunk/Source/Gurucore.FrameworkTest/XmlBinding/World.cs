@@ -7,7 +7,7 @@ using Gurucore.Framework.Core.XmlBinding;
 
 namespace Gurucore.FrameworkTest.XmlBinding
 {
-	[XmClass]
+	[XmlClass]
 	public class World
 	{
 		private List<Country> m_arrCountry;
@@ -18,6 +18,14 @@ namespace Gurucore.FrameworkTest.XmlBinding
 			get { return m_arrCountry; }
 			set { m_arrCountry = value; }
 		}
+
+		/*private List<int> m_arrImportantYear;
+
+		public List<int> ImportantYear
+		{
+			get { return m_arrImportantYear; }
+			set { m_arrImportantYear = value; }
+		}*/
 
 	}
 }

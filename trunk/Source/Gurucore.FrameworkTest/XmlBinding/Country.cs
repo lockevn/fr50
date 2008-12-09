@@ -7,7 +7,7 @@ using Gurucore.Framework.Core.XmlBinding;
 
 namespace Gurucore.FrameworkTest.XmlBinding
 {
-	[XmClass]
+	[XmlClass]
 	public class Country
 	{
 		private string m_sName;

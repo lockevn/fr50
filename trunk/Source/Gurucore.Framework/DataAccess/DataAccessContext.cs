@@ -79,6 +79,11 @@ namespace Gurucore.Framework.DataAccess
 			return m_stkDataSource.Pop();
 		}
 
+		public string GetCurrentDataSource(object p_oCaller)
+		{
+			return m_stkDataSource.Peek();
+		}
+
 		public void EnterTransaction()
 		{
 			m_nTransactionCount++;
@@ -202,7 +207,7 @@ namespace Gurucore.Framework.DataAccess
 			if (oDACtx == null)
 			{
 				oDACtx = new DataAccessContext();
-				Application.GetInstance().AddThreadSharedObject(oDACtx);
+				Application.GetInstance().SetThreadSharedObject(oDACtx);
 			}
 	
 			return oDACtx;

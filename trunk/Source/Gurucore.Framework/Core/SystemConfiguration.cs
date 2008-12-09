@@ -8,7 +8,7 @@ using Gurucore.Framework.Core.Configuration;
 
 namespace Gurucore.Framework.Core
 {
-	[XmClass("system")]
+	[XmlClass("system")]
 	public class SystemConfiguration : ConfigurationBase
 	{
 		private string m_sParameter;

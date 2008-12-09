@@ -60,5 +60,10 @@ namespace Gurucore.Framework.DataAccess.Persistence
 
 			return arrDTO.ToArray();
 		}
+
+		public override T[] GetDTO<T>(IDataReader p_oReader, string[] p_arrColumn, T[] p_arrDTO)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }

@@ -5,11 +5,20 @@ using System.Text;
 
 namespace Gurucore.Framework.Core.Proxy
 {
-	public class AfterCallSuccessAttribute : InterceptAttribute
+	[AttributeUsage(AttributeTargets.Method)]
+	public sealed class AfterCallSuccessAttribute : Attribute
 	{
-		public AfterCallSuccessAttribute(string p_sInterceptorClass, string p_sInterceptorAssembly)
-			: base(p_sInterceptorClass, p_sInterceptorAssembly, InterceptionType.AfterCallSuccess)
+		private string[] m_arrInterceptor;
+
+		public string[] Interceptors
 		{
+			get { return m_arrInterceptor; }
+			set { m_arrInterceptor = value; }
+		}
+
+		public AfterCallSuccessAttribute(params string[] p_arrInterceptors)
+		{
+			m_arrInterceptor = p_arrInterceptors;
 		}
 	}
 }

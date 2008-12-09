@@ -51,7 +51,7 @@ namespace Gurucore.Framework.Test
 
 		protected void AssertTheSame(object p_oObject, object p_oAnother, string p_sMessage)
 		{
-			if (!(p_oObject == p_oAnother))
+			if (!(object.ReferenceEquals(p_oObject, p_oAnother)))
 			{
 				throw new AssertException(p_sMessage);
 			}
@@ -59,7 +59,7 @@ namespace Gurucore.Framework.Test
 
 		protected void AssertDifferent(object p_oObject, object p_oAnother, string p_sMessage)
 		{
-			if (p_oObject == p_oAnother)
+			if (object.ReferenceEquals(p_oObject, p_oAnother))
 			{
 				throw new AssertException(p_sMessage);
 			}

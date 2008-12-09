@@ -20,25 +20,38 @@ namespace Gurucore.FrameworkTest.Proxy
 			m_sName = p_sName;
 		}
 
-		[BeforeCalling("Gurucore.FrameworkTest.Proxy.TimeInterceptor", "Gurucore.FrameworkTest.dll")]
-		[AfterReturned("Gurucore.FrameworkTest.Proxy.TimeInterceptor", "Gurucore.FrameworkTest.dll")]
+		[BeforeCalling(
+			"Gurucore.FrameworkTest.Proxy.LogInterceptor@Gurucore.FrameworkTest.dll",
+			"Gurucore.FrameworkTest.Proxy.TimeInterceptor@Gurucore.FrameworkTest.dll")]
 		public virtual void SayHello()
 		{
 		}
 
-		[BeforeCalling("Gurucore.FrameworkTest.Proxy.TimeInterceptor", "Gurucore.FrameworkTest.dll")]
-		[AfterReturned("Gurucore.FrameworkTest.Proxy.TimeInterceptor", "Gurucore.FrameworkTest.dll")]
-		[AfterCallSuccess("Gurucore.FrameworkTest.Proxy.LogInterceptor", "Gurucore.FrameworkTest.dll")]
-		[AfterCallFailure("Gurucore.FrameworkTest.Proxy.LogInterceptor", "Gurucore.FrameworkTest.dll")]
+		[BeforeCalling("Gurucore.FrameworkTest.Proxy.TimeInterceptor@Gurucore.FrameworkTest.dll")]
+		[AfterReturned("Gurucore.FrameworkTest.Proxy.TimeInterceptor@Gurucore.FrameworkTest.dll")]
+		[AfterCallSuccess("Gurucore.FrameworkTest.Proxy.LogInterceptor@Gurucore.FrameworkTest.dll")]
 		public virtual bool Agree(string p_sQuestion)
 		{
 			return false;
 		}
 
-		[CallWrapper("Gurucore.FrameworkTest.Proxy.RepeatInterceptor", "Gurucore.FrameworkTest.dll")]
+		[CallWrapper("Gurucore.FrameworkTest.Proxy.RepeatInterceptor@Gurucore.FrameworkTest.dll")]
 		public virtual string GetName()
 		{
 			return m_sName;
+		}
+
+		public virtual string Name
+		{
+			[BeforeCalling("Gurucore.FrameworkTest.Proxy.TimeInterceptor@Gurucore.FrameworkTest.dll")]
+			set
+			{
+				m_sName = value;
+			}
+			get
+			{
+				return m_sName;
+			}
 		}
 	}
 }

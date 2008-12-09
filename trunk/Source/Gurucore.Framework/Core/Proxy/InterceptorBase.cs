@@ -9,6 +9,6 @@ namespace Gurucore.Framework.Core.Proxy
 {
 	public abstract class InterceptorBase
 	{
-		public abstract object Intercept(object p_oInstance, MethodInfo p_oMethod, InterceptionType p_eInterceptorType, params object[] p_arrArg);
+		public abstract object Intercept(object p_oInstance, MethodInfo p_oMethod, InterceptorType p_eInterceptorType, params object[] p_arrArg);
 	}
 }

@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+using Gurucore.Framework.Core;
+
 namespace Gurucore.Framework.DataAccess
 {
 	[AttributeUsage(AttributeTargets.Class)]
-	public class MappedTableAttribute : Attribute
+	public class MappedTableAttribute : ClonableAttribute
 	{
 		private string m_sTableName;
 

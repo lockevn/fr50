@@ -3,3 +3,6 @@ D:\Projects\FR50\Source\Gurucore.Framework\bin\Debug\Gurucore.Framework.pdb
 D:\Projects\FR50\Source\Gurucore.Framework\obj\Debug\ResolveAssemblyReference.cache
 D:\Projects\FR50\Source\Gurucore.Framework\obj\Debug\Gurucore.Framework.dll
 D:\Projects\FR50\Source\Gurucore.Framework\obj\Debug\Gurucore.Framework.pdb
+D:\Projects\FR50\Source\Gurucore.Framework\bin\Debug\StringTemplate.dll
+D:\Projects\FR50\Source\Gurucore.Framework\bin\Debug\antlr.runtime.dll
+D:\Projects\FR50\Source\Gurucore.Framework\bin\Debug\TemplateEngine.dll

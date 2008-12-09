@@ -30,18 +30,16 @@ namespace Gurucore.Framework.DataAccess.Persistence
 			SqlGeneratorBase oSqlGenerator = GetSqlGenerator();
 
 			//get DTOMaker
-			DTOMakerBase oDTOMaker = GetDTOMaker(oDACfg.TransformStrategy, p_arrColumn);
-
-			//generate query
-			string sSql = oSqlGenerator.GetRecordSelect<T>(p_nID, p_arrColumn);
+			DTOMakerBase oDTOMaker = GetDTOMaker(oDACfg.TransformStrategy);
 
 			//obtain connection
 			IDbConnection oDbConn = oDACtx.GetConnection();
+			IDbCommand oDbCmd = oDACtx.GetDbCommand(oDbConn);
+
+			//prepare query
+			oSqlGenerator.PrepareRecordSelectCommand<T>(oDbCmd, p_nID, p_arrColumn);
 
 			//do query
-			IDbCommand oDbCmd = oDACtx.GetDbCommand(oDbConn);
-			oDbCmd.CommandText = sSql;
-			oDbCmd.CommandType = CommandType.Text;
 			IDataReader oDataReader = oDbCmd.ExecuteReader();
 
 			//convert IDbDataReader into DTO
@@ -113,18 +111,16 @@ namespace Gurucore.Framework.DataAccess.Persistence
 			SqlGeneratorBase oSqlGenerator = GetSqlGenerator();
 
 			//get DTOMaker
-			DTOMakerBase oDTOMaker = GetDTOMaker(oDACfg.TransformStrategy, p_arrColumn);
-
-			//generate query
-			string sSql = oSqlGenerator.GetListSelect<T>(p_expFilter, p_oOrder, p_nFirstRow, p_nRowCount, p_arrColumn);
+			DTOMakerBase oDTOMaker = GetDTOMaker(oDACfg.TransformStrategy);
 
 			//obtain connection
 			IDbConnection oDbConn = oDACtx.GetConnection();
-
-			//do query
 			IDbCommand oDbCmd = oDACtx.GetDbCommand(oDbConn);
-			oDbCmd.CommandText = sSql;
-			oDbCmd.CommandType = CommandType.Text;
+
+			//prepare query
+			oSqlGenerator.PrepareListSelectCommand<T>(oDbCmd, p_expFilter, p_oOrder, p_nFirstRow, p_nRowCount, p_arrColumn);
+			
+			//do query
 			IDataReader oDataReader = oDbCmd.ExecuteReader();
 
 			//convert IDbDataReader into DTO
@@ -138,7 +134,40 @@ namespace Gurucore.Framework.DataAccess.Persistence
 
 		public T Insert(T p_oObject)
 		{
-			return default(T);
+			//get current data access context
+			DataAccessConfiguration oDACfg = Application.GetInstance().GetGlobalSharedObject<DataAccessConfiguration>();
+			DataAccessContext oDACtx = DataAccessContext.GetDataAccessContext();
+
+			//get SqlGenerator
+			SqlGeneratorBase oSqlGenerator = GetSqlGenerator();
+
+			//get DTOMaker
+			DTOMakerBase oDTOMaker = GetDTOMaker(oDACfg.TransformStrategy);
+
+			//obtain connection
+			IDbConnection oDbConn = oDACtx.GetConnection();
+			IDbCommand oDbCmd = oDACtx.GetDbCommand(oDbConn);
+
+			//prepare query
+			string[] arrRetrievedColumn = oSqlGenerator.PrepareInsertCommand(oDbCmd, p_oObject);
+
+			//do query
+			IDataReader oDataReader = oDbCmd.ExecuteReader();
+
+			//convert IDbDataReader into DTO
+			T[] arrDTOs = oDTOMaker.GetDTO<T>(oDataReader, arrRetrievedColumn, new T[] { p_oObject });
+			oDataReader.Close();
+			oDACtx.ReturnConnection(oDbConn);
+
+			//return
+			if (arrDTOs.Length != 1)
+			{
+				return default(T);
+			}
+			else
+			{
+				return arrDTOs[0];
+			}
 		}
 
 		public int Delete(int p_nObjectID)
@@ -190,7 +219,7 @@ namespace Gurucore.Framework.DataAccess.Persistence
 			return oSqlGenerator;
 		}
 
-		private DTOMakerBase GetDTOMaker(string p_sTransformStrategy, string[] p_arrColumn)
+		private DTOMakerBase GetDTOMaker(string p_sTransformStrategy)
 		{
 			DTOMakerBase oDTOMaker = null;
 			if (m_sGenericTable != null)

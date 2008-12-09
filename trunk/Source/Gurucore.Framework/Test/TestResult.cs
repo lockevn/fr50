@@ -32,12 +32,12 @@ namespace Gurucore.Framework.Test
 			set { m_bFatal = value; }
 		}
 
-		private string m_sMessage;
+		private string m_sErrorMessage;
 
-		public string Message
+		public string ErrorMessage
 		{
-			get { return m_sMessage; }
-			set { m_sMessage = value; }
+			get { return m_sErrorMessage; }
+			set { m_sErrorMessage = value; }
 		}
 
 		private double m_dblRuntime;

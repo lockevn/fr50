@@ -26,7 +26,7 @@
 	  (GenericDTO need schema in case of serialization, otherwise every column value will become string after being serialized)
 	- Implement Join on TableMapper. Idea: new TableMapper<A>().Join(new TableMapper<B>, expJoinCondition, JoinType.Inner).GetObjects() [Pending]
 01-11-2008: (duongna)
-	- Simple DTOGenerator, (DTO generator should be written in FR50)
+	- Simple DTOGenerator, (DTO generator should be written in FR50)[70% done, main function, Save configuration is pending]
 	- New Graphic Test Runner
 	- Overload for GetObjects - now is Select [Done]
 	- Support Select * for GenericDTO [Done]
@@ -39,5 +39,30 @@
 		+ check this option when generated DTOMaker to have optimized code
 		+ check this option on ReflectionDTOMaker
 	- Todo file in other format (excel? google issues tracker?)
-	- Loadtest support. Should use [LoadTest] to mark the method to be meter [Done]
+	- Loadtest support. Should use [LoadTest] to mark the method to be metered [Done]
 	- parameter to disable table_prefix on MappedTable. Example: when using INFORMATION_SCHEMA [Done]
+04-11-2008: (duongna)
+	- Support to map table from a query (and a stored procedure also). Base on this, Join can be implemented. Should have a property in MappedTable attribute
+	- Refactor XmlBinder, ConfigurationIOManager. Complete Marshal and Save [Done]
+	- Highlight code in generator (low priority, consider, using HTML Viewer and parse code by flow) [Done]
+06-11-2008: (duongna)
+	- XMLSubSequence does not support primitive type. Currently, only support XmlClass. [pending]
+18-11-2008: (duongna)
+	- Working directory for testsuites
+	- JIT have problem with dynamically loaded assembly, ex: FrameworkTest. Investigate and fix.
+	- TableMapper support Gurucore style database convention only. Need a bridge solution for legacy DBs.
+	- Use List<> instead of array for internal methods' parameters [Considering]
+	- DTOMaker can fill existing DTO [Done]
+22-11-2008: (duongna)
+	- Update DTO from TableMapper always cause update every column. Should apply column versioning:
+		+ with object derived from DTOBase , add a version map like nullmap
+		+ with PONO object, proxy the PONO object to manage property's version
+		+ Consider to merge DTOBase and PONO, using proxy for both version and nullmap.
+	- Proxy framework 
+		+ support both programatic and declarative ways. Currently it support only declarative way.
+		+ support property also
+08-12-2008: (duongna)
+	- Proxy framework
+		+ support custom template
+	- DTO
+		+ Generate column state property instead of using Dictionary

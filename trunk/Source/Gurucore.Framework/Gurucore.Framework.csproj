@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="StringTemplate, Version=3.0.1.6846, Culture=neutral, PublicKeyToken=beee492b52c41e85, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Components\StringTemplate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -43,12 +47,20 @@
     </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="TemplateEngine, Version=1.0.0.30292, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Components\TemplateEngine\bin\Release\TemplateEngine.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\Activation\DynamicActivator.cs" />
     <Compile Include="Core\Capability.cs" />
     <Compile Include="Core\CapabilityBase.cs" />
     <Compile Include="Core\Configuration\ConfigurationBase.cs" />
+    <Compile Include="Core\ClonableAttribute.cs" />
+    <Compile Include="Core\Proxy\ProxyGenerator.cs" />
+    <EmbeddedResource Include="Core\Proxy\ProxyTemplate.tpl" />
+    <Compile Include="Core\Util\CloneUtil.cs" />
     <Compile Include="Core\Factory\FactoryBase.cs" />
     <Compile Include="Core\Factory\FactoryItemBase.cs" />
     <Compile Include="Core\FrameworkException.cs" />
@@ -60,11 +72,10 @@
     <Compile Include="Core\Proxy\CallWrapperAttribute.cs" />
     <Compile Include="Core\Proxy\DynamicProxy.cs" />
     <Compile Include="Core\Application.cs" />
-    <Compile Include="Core\Proxy\InterceptionType.cs" />
-    <Compile Include="Core\Proxy\InterceptAttribute.cs" />
+    <Compile Include="Core\Proxy\InterceptorType.cs" />
     <Compile Include="Core\Proxy\InterceptorBase.cs" />
     <Compile Include="Core\SystemConfiguration.cs" />
-    <Compile Include="Core\Configuration\ConfigurationLoader.cs" />
+    <Compile Include="Core\Configuration\ConfigurationIOManager.cs" />
     <Compile Include="DataAccess\DataAccessCapability.cs" />
     <Compile Include="DataAccess\DataAccessConfiguration.cs" />
     <Compile Include="DataAccess\DataAccessContext.cs" />
@@ -74,8 +85,11 @@
     <Compile Include="DataAccess\DataSource\DataSourceFactory.cs" />
     <Compile Include="DataAccess\DataSource\DataSource.cs" />
     <Compile Include="DataAccess\DTOBase.cs" />
+    <Compile Include="DataAccess\DTOColumnState.cs" />
     <Compile Include="DataAccess\MappedColumnAttribute.cs" />
     <Compile Include="DataAccess\Persistence\Aggregation.cs" />
+    <Compile Include="DataAccess\Persistence\DTOProxier.cs" />
+    <EmbeddedResource Include="DataAccess\Persistence\DTOProxyTemplate.tpl" />
     <Compile Include="DataAccess\Persistence\GenericDTOMaker.cs" />
     <Compile Include="DataAccess\Persistence\GenericSqlGenerator.cs" />
     <Compile Include="DataAccess\Persistence\GenericTableMapper.cs" />
@@ -111,11 +125,15 @@
     <Compile Include="Core\XmlBinding\XmlPropertyAttribute.cs" />
     <Compile Include="Core\XmlBinding\XmlPropertyType.cs" />
     <Compile Include="Core\XmlBinding\XmlBinder.cs" />
-    <Compile Include="Core\XmlBinding\XmClassAttribute.cs" />
+    <Compile Include="Core\XmlBinding\XmlClassAttribute.cs" />
     <Compile Include="Core\XmlBinding\XmlSubSequenceAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Test\TestConfiguration.cs" />
     <Compile Include="Test\AssertException.cs" />
+    <Compile Include="Test\TestInspector.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataAccess\Helper\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,7 +1,8 @@
-D:\Projects\FR50\Source\Gurucore.FrameworkTest\bin\Debug\Gurucore.FrameworkTest.exe
 D:\Projects\FR50\Source\Gurucore.FrameworkTest\bin\Debug\Gurucore.FrameworkTest.pdb
 D:\Projects\FR50\Source\Gurucore.FrameworkTest\obj\Debug\ResolveAssemblyReference.cache
-D:\Projects\FR50\Source\Gurucore.FrameworkTest\obj\Debug\Gurucore.FrameworkTest.exe
 D:\Projects\FR50\Source\Gurucore.FrameworkTest\obj\Debug\Gurucore.FrameworkTest.pdb
 D:\Projects\FR50\Source\Gurucore.FrameworkTest\bin\Debug\Gurucore.Framework.dll
 D:\Projects\FR50\Source\Gurucore.FrameworkTest\bin\Debug\Gurucore.Framework.pdb
+D:\Projects\FR50\Source\Gurucore.FrameworkTest\bin\Debug\Gurucore.FrameworkTest.dll
+D:\Projects\FR50\Source\Gurucore.FrameworkTest\obj\Debug\Gurucore.FrameworkTest.dll
+D:\Projects\FR50\Source\Gurucore.FrameworkTest\bin\Debug\TemplateEngine.dll

@@ -5,11 +5,20 @@ using System.Text;
 
 namespace Gurucore.Framework.Core.Proxy
 {
-	public class CallWrapperAttribute : InterceptAttribute
+	[AttributeUsage(AttributeTargets.Method)]
+	public sealed class CallWrapperAttribute : Attribute
 	{
-		public CallWrapperAttribute(string p_sInterceptorClass, string p_sInterceptorAssembly)
-			: base(p_sInterceptorClass, p_sInterceptorAssembly, InterceptionType.CallWrapper)
+		private string m_sInterceptor;
+
+		public string Interceptor
 		{
+			get { return m_sInterceptor; }
+			set { m_sInterceptor = value; }
+		}
+
+		public CallWrapperAttribute(string p_sInterceptor)
+		{
+			m_sInterceptor = p_sInterceptor;
 		}
 	}
 }

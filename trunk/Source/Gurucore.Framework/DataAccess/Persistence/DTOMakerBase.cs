@@ -11,5 +11,6 @@ namespace Gurucore.Framework.DataAccess.Persistence
 	public abstract class DTOMakerBase
 	{
 		public abstract T[] GetDTO<T>(IDataReader p_oReader, string[] p_arrColumn);
+		public abstract T[] GetDTO<T>(IDataReader p_oReader, string[] p_arrColumn, T[] p_arrDTO);
 	}
 }

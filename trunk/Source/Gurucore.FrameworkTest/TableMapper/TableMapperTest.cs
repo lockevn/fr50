@@ -57,13 +57,21 @@ namespace Gurucore.FrameworkTest.TableMapper
 		}
 
 		[TestCase]
+		public void ProxyDTO()
+		{
+			DTOProxier oProxier = new DTOProxier();
+			Type oType = oProxier.GetProxyClass<UserDTO>();
+			UserDTO dtoUser = (UserDTO)Activator.CreateInstance(oType);
+		}
+
+		[TestCase]
 		public void GetInformationSchema()
 		{
 			TableMapper<Table> oTableMapper = new TableMapper<Table>();
 
 			DataAccessContext oDACtx = DataAccessContext.GetDataAccessContext();
 
-			oDACtx.SetCurrentDataSource("012d80be-8b2c-4904-b4f1-1637d6c91a3c", "Test");
+			oDACtx.SetCurrentDataSource(this, "Test");
 
 			Expression expFilter = new ColumnOperand(Table.TABLE_SCHEMA).Eq(new ConstantOperand("fr50"));
 				
@@ -79,7 +87,7 @@ namespace Gurucore.FrameworkTest.TableMapper
 
 			DataAccessContext oDACtx = DataAccessContext.GetDataAccessContext();
 
-			oDACtx.SetCurrentDataSource("012d80be-8b2c-4904-b4f1-1637d6c91a3c", "Test");
+			oDACtx.SetCurrentDataSource(this, "Test");
 
 			int nAutoID = 2;
 			AutoDTO dtoAuto = null;
@@ -95,35 +103,13 @@ namespace Gurucore.FrameworkTest.TableMapper
 		}
 
 		[TestCase]
-		public void GetObjectUsingPONO()
-		{
-			TableMapper<Auto> oTableMapper = new TableMapper<Auto>();
-
-			DataAccessContext oDACtx = DataAccessContext.GetDataAccessContext();
-
-			oDACtx.SetCurrentDataSource("012d80be-8b2c-4904-b4f1-1637d6c91a3c", "Test");
-
-			int nAutoID = 5;
-			Auto oAuto = null;
-			DateTime dtStart = DateTime.Now;
-			oAuto = oTableMapper.Select(nAutoID);
-			int nTime = DateTime.Now.Subtract(dtStart).Milliseconds;
-
-			oDACtx.UnSetCurrentDataSource();
-
-			this.AssertEqual(oAuto.AutoID, nAutoID, "Query was not correct");
-			this.AssertNotNull(oAuto.Brand, "Query was not correct. Brand should not be null");
-			this.AssertNull(oAuto.Series, "Query was not correct. Series should be null");
-		}
-
-		[TestCase]
 		public void GetObjectUsingGenericDTO()
 		{
 			GenericTableMapper oTableMapper = new GenericTableMapper("Auto");
 
 			DataAccessContext oDACtx = DataAccessContext.GetDataAccessContext();
 
-			oDACtx.SetCurrentDataSource("012d80be-8b2c-4904-b4f1-1637d6c91a3c", "Test");
+			oDACtx.SetCurrentDataSource(this, "Test");
 
 			int nAutoID = 5;
 			GenericDTO dtoAuto = null;
@@ -145,7 +131,7 @@ namespace Gurucore.FrameworkTest.TableMapper
 
 			DataAccessContext oDACtx = DataAccessContext.GetDataAccessContext();
 
-			oDACtx.SetCurrentDataSource("012d80be-8b2c-4904-b4f1-1637d6c91a3c", "Test");
+			oDACtx.SetCurrentDataSource(this, "Test");
 
 			AutoDTO[] arrAuto;
 			DateTime dtStart = DateTime.Now;
@@ -163,36 +149,13 @@ namespace Gurucore.FrameworkTest.TableMapper
 		}
 
 		[TestCase(LoadTest = true)]
-		public void GetObjectsUsingPONO()
-		{
-			TableMapper<Auto> oTableMapper = new TableMapper<Auto>();
-
-			DataAccessContext oDACtx = DataAccessContext.GetDataAccessContext();
-
-			oDACtx.SetCurrentDataSource("012d80be-8b2c-4904-b4f1-1637d6c91a3c", "Test");
-
-			Auto[] arrAuto;
-			DateTime dtStart = DateTime.Now;
-
-			Expression expFilter = new Expression(new ColumnOperand(Auto.BRAND), Operator.Neq, new ConstantOperand("BMW")).Or(
-									new Expression(new ColumnOperand(Auto.EXPIRE_DATE), Operator.Gt, new ConstantOperand(DateTime.Now))).Or(
-									new Expression(new ColumnOperand(Auto.BRAND), Operator.IsNull));
-
-			//arrAuto = oTableMapper.Select(expFilter, new Order(Auto.AUTO_ID, SortType.Ascending), 0, 100);
-			arrAuto = oTableMapper.Select(0, 100000); //SELECT WITH no order, no filter
-			double dblTime = DateTime.Now.Subtract(dtStart).TotalMilliseconds;
-
-			oDACtx.UnSetCurrentDataSource();
-		}
-
-		[TestCase(LoadTest = true)]
 		public void GetObjectsUsingGenericDTO()
 		{
 			GenericTableMapper oTableMapper = new GenericTableMapper("Auto");
 
 			DataAccessContext oDACtx = DataAccessContext.GetDataAccessContext();
 
-			oDACtx.SetCurrentDataSource("012d80be-8b2c-4904-b4f1-1637d6c91a3c", "Test");
+			oDACtx.SetCurrentDataSource(this, "Test");
 
 			GenericDTO[] arrAuto;
 			DateTime dtStart = DateTime.Now;
@@ -206,6 +169,30 @@ namespace Gurucore.FrameworkTest.TableMapper
 			arrAuto = oTableMapper.Select(0, 100000); //SELECT WITH no order, no filter
 
 			double dblTime = DateTime.Now.Subtract(dtStart).TotalMilliseconds;
+
+			oDACtx.UnSetCurrentDataSource();
+		}
+
+		[TestCase]
+		public void AddObjectUsingDTO()
+		{
+			TableMapper<AutoDTO> tblAuto = new TableMapper<AutoDTO>();
+
+			DataAccessContext oDACtx = DataAccessContext.GetDataAccessContext();
+
+			oDACtx.SetCurrentDataSource(this, "Test");
+
+			AutoDTO dtoAuto = new AutoDTO();
+			dtoAuto.Brand = "Mercedes";
+			dtoAuto.Age = 3;
+			dtoAuto.Cylinder = 2.4;
+			dtoAuto.ExpireDate = new DateTime(2010, 12, 31);
+			dtoAuto.IsLuxury = true;
+			dtoAuto.Series = "E240";
+
+			AutoDTO dtoNewAuto = tblAuto.Insert(dtoAuto);
+
+			this.AssertTheSame(dtoAuto, dtoNewAuto, "Insert return another DTO instead of update given DTO");
 
 			oDACtx.UnSetCurrentDataSource();
 		}
