@@ -6,12 +6,14 @@
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{B45937E6-6730-4FDB-9E73-AA971EA66736}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Gurucore.FrameworkTest</RootNamespace>
     <AssemblyName>Gurucore.FrameworkTest</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,21 +52,23 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\ConfigurationTest.cs" />
+    <Compile Include="DeepClone\Campus.cs" />
+    <Compile Include="DeepClone\DeepCloneTest.cs" />
+    <Compile Include="DeepClone\Faculty.cs" />
+    <Compile Include="DeepClone\University.cs" />
     <Compile Include="Factory\FactoryTest.cs" />
-    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Proxy\Auto.cs" />
     <Compile Include="Proxy\LogInterceptor.cs" />
     <Compile Include="Proxy\ProxyTest.cs" />
     <Compile Include="Proxy\RepeatInterceptor.cs" />
     <Compile Include="Proxy\SpokemanService.cs" />
     <Compile Include="Proxy\TimeInterceptor.cs" />
-    <Compile Include="TableMapper\Auto.cs" />
     <Compile Include="TableMapper\AutoDTO.cs" />
-    <Compile Include="TableMapper\AutoDTO_DTOMaker.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="TableMapper\Table.cs" />
     <Compile Include="TableMapper\TableMapperTest.cs" />
+    <Compile Include="TableMapper\UserDTO.cs" />
+    <Compile Include="TableMapper\UserDTO_Proxy.cs" />
     <Compile Include="XmlBinding\City.cs" />
     <Compile Include="XmlBinding\Country.cs" />
     <Compile Include="XmlBinding\Language.cs" />
@@ -73,9 +77,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Configuration\Config4Test.xml" />
-    <Content Include="Config\System\Config.xml" />
-    <Content Include="Config\System\DataProvider.xml" />
-    <Content Include="Config\System\DataSource.xml" />
     <Content Include="XmlBinding\Asia.xml" />
   </ItemGroup>
   <ItemGroup>

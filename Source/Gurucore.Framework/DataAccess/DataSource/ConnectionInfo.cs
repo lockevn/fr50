@@ -7,7 +7,7 @@ using Gurucore.Framework.Core.XmlBinding;
 
 namespace Gurucore.Framework.DataAccess.DataSource
 {
-	[XmClass]
+	[XmlClass]
 	public class ConnectionInfo
 	{
 		string m_sValue;

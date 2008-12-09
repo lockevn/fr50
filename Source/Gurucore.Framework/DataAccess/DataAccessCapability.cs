@@ -25,26 +25,26 @@ namespace Gurucore.Framework.DataAccess
 
 			//create table info manager
 			TableInfoManager oTableInfoMgr = new TableInfoManager();
-			Application.GetInstance().AddGlobalSharedObject(oTableInfoMgr);
+			Application.GetInstance().SetGlobalSharedObject(oTableInfoMgr);
 
 			//load Sql generator
 			SqlGeneratorBase oSqlGenerator;
 			if (oDACfg.SqlGeneratorAssembly.NullOrEmpty())
 			{
 				oSqlGenerator = new ReflectionSqlGenerator();
-				Application.GetInstance().AddGlobalSharedObject(SqlGeneratorBase.CACHE_KEY, oSqlGenerator);
+				Application.GetInstance().SetGlobalSharedObject(SqlGeneratorBase.CACHE_KEY, oSqlGenerator);
 			}
 			else
 			{
 				DynamicActivator oDynActivator = Application.GetInstance().GetGlobalSharedObject<DynamicActivator>();
 				oSqlGenerator = (SqlGeneratorBase)(oDynActivator.GetObject(oDACfg.SqlGeneratorAssembly, oDACfg.SqlGeneratorClass));
-				Application.GetInstance().AddGlobalSharedObject(SqlGeneratorBase.CACHE_KEY, oSqlGenerator);
+				Application.GetInstance().SetGlobalSharedObject(SqlGeneratorBase.CACHE_KEY, oSqlGenerator);
 			}
 
 			//load dataprovider factory
 			DataProviderFactory oDPFactory = new DataProviderFactory(
 				sConfigDir + Path.DirectorySeparatorChar + "System" + Path.DirectorySeparatorChar + "DataProvider.xml");
-			Application.GetInstance().AddGlobalSharedObject(oDPFactory);
+			Application.GetInstance().SetGlobalSharedObject(oDPFactory);
 
 			//load system's datasource factory
 			DataSourceFactory oDSFactory = new DataSourceFactory(
@@ -61,7 +61,7 @@ namespace Gurucore.Framework.DataAccess
 				}
 			}
 
-			Application.GetInstance().AddGlobalSharedObject(oDSFactory);			
+			Application.GetInstance().SetGlobalSharedObject(oDSFactory);			
 		}
 	}
 }

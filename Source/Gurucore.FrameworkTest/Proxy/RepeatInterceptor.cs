@@ -9,9 +9,9 @@ namespace Gurucore.FrameworkTest.Proxy
 {
 	public class RepeatInterceptor : InterceptorBase
 	{
-		public override object Intercept(object p_oInstance, System.Reflection.MethodInfo p_oMethod, InterceptionType p_eInterceptorType, params object[] p_arrArg)
+		public override object Intercept(object p_oInstance, System.Reflection.MethodInfo p_oMethod, InterceptorType p_eInterceptorType, params object[] p_arrArg)
 		{
-			if (p_eInterceptorType == InterceptionType.CallWrapper)
+			if (p_eInterceptorType == InterceptorType.CallWrapper)
 			{
 				object oResult = null;
 

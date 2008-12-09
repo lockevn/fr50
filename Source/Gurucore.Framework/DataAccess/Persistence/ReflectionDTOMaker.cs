@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Reflection;
+using System.Data;
 
 using Gurucore.Framework.Core;
 
@@ -10,7 +11,12 @@ namespace Gurucore.Framework.DataAccess.Persistence
 {
 	public class ReflectionDTOMaker : DTOMakerBase
 	{
-		public override T[] GetDTO<T>(System.Data.IDataReader p_oReader, string[] p_arrColumn)
+		public override T[] GetDTO<T>(IDataReader p_oReader, string[] p_arrColumn)
+		{
+			return this.GetDTO<T>(p_oReader, p_arrColumn, null);
+		}
+
+		public override T[] GetDTO<T>(IDataReader p_oReader, string[] p_arrColumn, T[] p_arrDTO)
 		{
 			List<T> arrDTO = new List<T>();
 			Type oDTOType = typeof(T);
@@ -19,9 +25,18 @@ namespace Gurucore.Framework.DataAccess.Persistence
 			TableInfo oTableInfo = oTableInfoMgr.GetTableInfo(oDTOType);
 
 			int nReadColumn = p_oReader.FieldCount;
+			int nReadRow = 0;
 			while (p_oReader.Read())
 			{
-				T oDTO = (T)Activator.CreateInstance(oDTOType);
+				T oDTO = default(T);
+				if (p_arrDTO == null)
+				{
+					oDTO = (T)Activator.CreateInstance(oDTOType);
+				}
+				else
+				{
+					oDTO = p_arrDTO[nReadRow];
+				}
 
 				for (int i = 0; i < nReadColumn; i++)
 				{
@@ -47,6 +62,7 @@ namespace Gurucore.Framework.DataAccess.Persistence
 					}
 				}
 				arrDTO.Add(oDTO);
+				nReadRow++;
 			}
 
 			return arrDTO.ToArray();

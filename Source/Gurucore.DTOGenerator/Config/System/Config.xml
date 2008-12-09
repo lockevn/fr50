@@ -1,14 +1,78 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <configuration>
-	<system class="Gurucore.Framework.Core.SystemConfiguration">
-		<parameter></parameter>
-		<default_locale>en-US</default_locale>
-		<capability assembly="Gurucore.Framework.dll" class="Gurucore.Framework.DataAccess.DataAccessCapability">DataAccess</capability>
-	</system>
-	<data_access class="Gurucore.Framework.DataAccess.DataAccessConfiguration">
-		<sql_generator_assembly></sql_generator_assembly>
-		<sql_generator_class></sql_generator_class>
-		<transform_strategy>Reflection</transform_strategy>
-		<schema_support>true</schema_support>
-	</data_access>
+  <system class="Gurucore.Framework.Core.SystemConfiguration">
+    <parameter>
+    </parameter>
+    <default_locale>en-US</default_locale>
+    <capability assembly="Gurucore.Framework.dll" class="Gurucore.Framework.DataAccess.DataAccessCapability">DataAccess</capability>
+  </system>
+  <data_access class="Gurucore.Framework.DataAccess.DataAccessConfiguration">
+    <sql_generator_assembly>
+    </sql_generator_assembly>
+    <sql_generator_class>
+    </sql_generator_class>
+    <transform_strategy>Reflection</transform_strategy>
+    <schema_support>true</schema_support>
+  </data_access>
+  <dto_generator class="Gurucore.DTOGenerator.DTOGeneratorConfiguration" assembly="Gurucore.DTOGenerator.exe">
+    <generated_namespace>Gurucore.FrameworkTest.TableMapper</generated_namespace>
+    <save_to>D:\Projects\FR50\Source\Gurucore.FrameworkTest\TableMapper</save_to>
+    <type_mapping provider="SQL Server 2000">
+      <type name="bigint" prefix="n">Int64</type>
+      <type name="binary" prefix="o">object</type>
+      <type name="bit" prefix="b">bool</type>
+      <type name="char" prefix="c">char</type>
+      <type name="datetime" prefix="dt">DateTime</type>
+      <type name="decimal" prefix="dc">decimal</type>
+      <type name="float" prefix="db">double</type>
+      <type name="int" prefix="n">int</type>
+      <type name="money" prefix="db">double</type>
+      <type name="nchar" prefix="c">char</type>
+      <type name="ntext" prefix="s">string</type>
+      <type name="numeric" prefix="db">double</type>
+      <type name="nvarchar" prefix="s">string</type>
+      <type name="real" prefix="db">double</type>
+      <type name="smalldatetime" prefix="dt">DateTime</type>
+      <type name="smallint" prefix="sh">short</type>
+      <type name="smallmoney" prefix="db">double</type>
+      <type name="sql_variant" prefix="o">object</type>
+      <type name="timestamp" prefix="o">object</type>
+      <type name="tinyint" prefix="by">byte</type>
+      <type name="uniqueidentifier" prefix="o">object</type>
+      <type name="varbinary" prefix="o">object</type>
+      <type name="varchar" prefix="s">string</type>
+    </type_mapping>
+    <type_mapping provider="MySql">
+      <type name="tinyint" prefix="n">byte</type>
+      <type name="smallint" prefix="n">short</type>
+      <type name="mediumint" prefix="n">int</type>
+      <type name="int" prefix="n">int</type>
+      <type name="bigint" prefix="n">long</type>
+      <type name="float" prefix="f">float</type>
+      <type name="double" prefix="dbl">double</type>
+      <type name="decimal" prefix="dec">decimal</type>
+      <type name="date" prefix="dt">DateTime</type>
+      <type name="datetime" prefix="dt">DateTime</type>
+      <type name="timestamp" prefix="s">string</type>
+      <type name="time" prefix="dt">DateTime</type>
+      <type name="year" prefix="dt">DateTime</type>
+      <type name="char" prefix="s">string</type>
+      <type name="varchar" prefix="s">string</type>
+      <type name="tinyblob" prefix="o">object</type>
+      <type name="blob" prefix="o">object</type>
+      <type name="mediumblob" prefix="o">object</type>
+      <type name="longblob" prefix="o">object</type>
+      <type name="tinytext" prefix="s">string</type>
+      <type name="text" prefix="s">string</type>
+      <type name="mediumtext" prefix="s">string</type>
+      <type name="longtext" prefix="s">string</type>
+      <type name="enum" prefix="s">string</type>
+      <type name="set" prefix="o">object</type>
+      <type name="geometry" prefix="s">string</type>
+      <type name="binary" prefix="o">object</type>
+      <type name="varbinary" prefix="o">object</type>
+      <type name="bit" prefix="n">long</type>
+      <type name="boolean" prefix="b">bool</type>
+    </type_mapping>
+  </dto_generator>
 </configuration>

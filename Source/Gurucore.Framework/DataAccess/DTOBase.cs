@@ -15,6 +15,8 @@ namespace Gurucore.Framework.DataAccess
 		private const string NULL_MAP = "__null_map__";
 		private Dictionary<string, bool> m_dicIsNull;
 
+		protected Dictionary<string, DTOColumnState> m_dicColumnState;
+
 		public DTOBase()
 		{
 			m_dicIsNull = new Dictionary<string, bool>();

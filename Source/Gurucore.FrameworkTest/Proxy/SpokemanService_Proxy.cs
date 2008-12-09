@@ -5,76 +5,185 @@ using Gurucore.Framework.Core.Proxy;
 
 namespace Gurucore.FrameworkTest.Proxy
 {
-	public class SpokemanService_Proxy : Gurucore.FrameworkTest.Proxy.SpokemanService
+	public class SpokemanService_Proxy : SpokemanService
 	{
+
 		public SpokemanService_Proxy()
 			: base()
 		{
 		}
+
 		public SpokemanService_Proxy(String p_sName)
 			: base(p_sName)
 		{
 		}
 
+
+
 		public override void SayHello()
 		{
-			Gurucore.FrameworkTest.Proxy.TimeInterceptor oBeforeCallingInterceptor = new Gurucore.FrameworkTest.Proxy.TimeInterceptor();
+
 
 			MethodInfo oMethod = this.GetType().GetMethod("SayHello");
 
+
 			try
 			{
-				//before
-				oBeforeCallingInterceptor.Intercept(this, oMethod, InterceptionType.BeforeCalling);
+
+				Gurucore.FrameworkTest.Proxy.TimeInterceptor oBeforeCallingInterceptor1 = new Gurucore.FrameworkTest.Proxy.TimeInterceptor();
+
+				oBeforeCallingInterceptor1.Intercept(this, oMethod, InterceptorType.BeforeCalling);
+
+
+
 
 				base.SayHello();
 
-				//after call success
+
+
 			}
 			catch (Exception ex)
 			{
-				//after call failure
+
 
 				throw ex;
 			}
 			finally
 			{
-				//after returned
+
+				Gurucore.FrameworkTest.Proxy.TimeInterceptor oAfterReturnedInterceptor1 = new Gurucore.FrameworkTest.Proxy.TimeInterceptor();
+
+				oAfterReturnedInterceptor1.Intercept(this, oMethod, InterceptorType.AfterReturned);
+
+
 			}
+
+
+
 		}
+
 		public override Boolean Agree(String p_sQuestion)
 		{
-			Gurucore.FrameworkTest.Proxy.TimeInterceptor oBeforeCallingInterceptor = new Gurucore.FrameworkTest.Proxy.TimeInterceptor();
-			Gurucore.FrameworkTest.Proxy.TimeInterceptor oAfterReturnedInteceptor = new Gurucore.FrameworkTest.Proxy.TimeInterceptor();
-			Gurucore.FrameworkTest.Proxy.LogInterceptor oAfterCallSuccessInteceptor = new Gurucore.FrameworkTest.Proxy.LogInterceptor();
-			Gurucore.FrameworkTest.Proxy.LogInterceptor oAfterCallFailureInteceptor = new Gurucore.FrameworkTest.Proxy.LogInterceptor();
+
+			Boolean result;
+
 
 			MethodInfo oMethod = this.GetType().GetMethod("Agree");
 
-			Boolean oResult = default(Boolean);
+
 			try
 			{
-				//before
-				oBeforeCallingInterceptor.Intercept(this, oMethod, InterceptionType.BeforeCalling, p_sQuestion);
 
-				oResult = base.Agree(p_sQuestion);
+				Gurucore.FrameworkTest.Proxy.TimeInterceptor oBeforeCallingInterceptor1 = new Gurucore.FrameworkTest.Proxy.TimeInterceptor();
 
-				//after call success
-				oAfterCallSuccessInteceptor.Intercept(this, oMethod, InterceptionType.AfterCallSuccess, p_sQuestion);
+				oBeforeCallingInterceptor1.Intercept(this, oMethod, InterceptorType.BeforeCalling, p_sQuestion);
+
+
+
+
+				result = base.Agree(p_sQuestion);
+
+
+
+				Gurucore.FrameworkTest.Proxy.LogInterceptor oAfterCallSuccessInterceptor1 = new Gurucore.FrameworkTest.Proxy.LogInterceptor();
+
+				oAfterCallSuccessInterceptor1.Intercept(this, oMethod, InterceptorType.BeforeCalling, p_sQuestion);
+
+
 			}
 			catch (Exception ex)
 			{
-				//after call failure
-				oAfterCallFailureInteceptor.Intercept(this, oMethod, InterceptionType.AfterCallFailure, p_sQuestion);
+
 
 				throw ex;
 			}
 			finally
 			{
-				//after returned
-				oAfterReturnedInteceptor.Intercept(this, oMethod, InterceptionType.AfterReturned, p_sQuestion);
+
+				Gurucore.FrameworkTest.Proxy.TimeInterceptor oAfterReturnedInterceptor1 = new Gurucore.FrameworkTest.Proxy.TimeInterceptor();
+
+				oAfterReturnedInterceptor1.Intercept(this, oMethod, InterceptorType.AfterReturned, p_sQuestion);
+
+
 			}
-			return oResult;
+
+
+
+			return result;
+
 		}
+
+		public override String GetName()
+		{
+
+			String result;
+
+
+			MethodInfo oMethod = this.GetType().GetMethod("GetName");
+
+
+			Gurucore.FrameworkTest.Proxy.RepeatInterceptor oCallWrapperInterceptor = new Gurucore.FrameworkTest.Proxy.RepeatInterceptor();
+
+
+			result = (String)oCallWrapperInterceptor.Intercept(this, oMethod, InterceptorType.CallWrapper);
+
+
+
+
+
+			return result;
+
+		}
+
+
+
+		public override string Name
+		{
+			get
+			{
+				MethodInfo oMethod = this.GetType().GetProperty("Name").GetAccessors()[0];
+				String result;
+				try
+				{
+
+					result = base.Name;
+
+				}
+				catch (Exception ex)
+				{
+
+					throw ex;
+				}
+				finally
+				{
+
+				}
+
+				return result;
+			}
+			set
+			{
+				MethodInfo oMethod = this.GetType().GetProperty("Name").GetAccessors()[1];
+				try
+				{
+
+					Gurucore.FrameworkTest.Proxy.TimeInterceptor oSetterBeforeCallingInterceptor1 = new Gurucore.FrameworkTest.Proxy.TimeInterceptor();
+					oSetterBeforeCallingInterceptor1.Intercept(this, oMethod, InterceptorType.BeforeCalling);
+
+					base.Name = value;
+
+				}
+				catch (Exception ex)
+				{
+
+					throw ex;
+				}
+				finally
+				{
+
+				}
+			}
+		}
+
 	}
 }

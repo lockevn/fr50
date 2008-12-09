@@ -7,7 +7,7 @@ using Gurucore.Framework.Core.XmlBinding;
 
 namespace Gurucore.Framework.Core
 {
-	[XmClass]
+	[XmlClass]
 	public class Capability
 	{
 		private string m_sAssembly;

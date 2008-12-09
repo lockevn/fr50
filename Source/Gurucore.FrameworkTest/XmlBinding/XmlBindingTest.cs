@@ -13,8 +13,10 @@ namespace Gurucore.FrameworkTest.XmlBinding
 		[TestCase]
 		public void BindTheWorld()
 		{
-			XmlBinder<World> oBinder = new XmlBinder<World>("XmlBinding/Asia.xml");
-			World oWorld = oBinder.Load();
+			XmlBinder<World> oBinder = new XmlBinder<World>();
+			World oWorld = oBinder.Load("XmlBinding/Asia.xml");
+
+			oBinder.Unload(oWorld, "XmlBinding/Asia2.xml");
 		}
 	}
 }

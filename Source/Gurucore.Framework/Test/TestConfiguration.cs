@@ -8,7 +8,7 @@ using Gurucore.Framework.Core.Configuration;
 
 namespace Gurucore.Framework.Test
 {
-	[XmClass("test")]
+	[XmlClass("test")]
 	public class TestConfiguration : ConfigurationBase
 	{
 		private List<string> m_arrTestTarget;

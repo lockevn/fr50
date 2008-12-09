@@ -21,11 +21,7 @@ namespace Gurucore.FrameworkTest.TableMapper
 		public int AutoID
 		{
 			get { return m_nAutoID; }
-			set 
-			{
-				this.SetNotNull(AutoDTO.AUTO_ID);
-				m_nAutoID = value; 
-			}
+			set { m_nAutoID = value; }
 		}
 
 		private string m_sBrand;
@@ -34,11 +30,7 @@ namespace Gurucore.FrameworkTest.TableMapper
 		public string Brand
 		{
 			get { return m_sBrand; }
-			set 
-			{
-				this.SetNotNull(AutoDTO.BRAND);
-				m_sBrand = value;
-			}
+			set { m_sBrand = value; }
 		}
 
 		private int m_nAge;
@@ -47,11 +39,7 @@ namespace Gurucore.FrameworkTest.TableMapper
 		public int Age
 		{
 			get { return m_nAge; }
-			set 
-			{
-				this.SetNotNull(AutoDTO.AGE);
-				m_nAge = value;
-			}
+			set { m_nAge = value; }
 		}
 
 		private string m_sSeries;
@@ -60,11 +48,7 @@ namespace Gurucore.FrameworkTest.TableMapper
 		public string Series
 		{
 			get { return m_sSeries; }
-			set
-			{
-				this.SetNotNull(AutoDTO.SERIES);
-				m_sSeries = value;
-			}
+			set { m_sSeries = value; }
 		}
 
 		private double m_dblCylinder;
@@ -73,11 +57,7 @@ namespace Gurucore.FrameworkTest.TableMapper
 		public double Cylinder
 		{
 			get { return m_dblCylinder; }
-			set 
-			{
-				this.SetNotNull(AutoDTO.CYLINDER);
-				m_dblCylinder = value;
-			}
+			set { m_dblCylinder = value; }
 		}
 
 		private DateTime m_dtExpireDate;
@@ -86,11 +66,7 @@ namespace Gurucore.FrameworkTest.TableMapper
 		public DateTime ExpireDate
 		{
 			get { return m_dtExpireDate; }
-			set 
-			{
-				this.SetNotNull(AutoDTO.EXPIRE_DATE);
-				m_dtExpireDate = value;
-			}
+			set { m_dtExpireDate = value; }
 		}
 
 		private bool m_bIsLuxury;
@@ -99,11 +75,7 @@ namespace Gurucore.FrameworkTest.TableMapper
 		public bool IsLuxury
 		{
 			get { return m_bIsLuxury; }
-			set
-			{
-				this.SetNotNull(AutoDTO.IS_LUXURY);
-				m_bIsLuxury = value;
-			}
+			set { m_bIsLuxury = value; }
 		}
 	}
 }

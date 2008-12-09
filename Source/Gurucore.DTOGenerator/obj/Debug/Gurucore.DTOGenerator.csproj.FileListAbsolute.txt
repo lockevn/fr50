@@ -18,3 +18,8 @@ D:\Projects\FR50\Source\Gurucore.DTOGenerator\obj\Debug\ResolveAssemblyReference
 D:\Projects\FR50\Source\Gurucore.DTOGenerator\obj\Debug\Gurucore.DTOGenerator.MainForm.resources
 D:\Projects\FR50\Source\Gurucore.DTOGenerator\obj\Debug\Gurucore.DTOGenerator.Properties.Resources.resources
 D:\Projects\FR50\Source\Gurucore.DTOGenerator\obj\Debug\Gurucore.DTOGenerator.csproj.GenerateResource.Cache
+D:\Projects\FR50\Source\Gurucore.DTOGenerator\obj\Debug\Gurucore.DTOGenerator.Options.resources
+D:\Projects\FR50\Source\Gurucore.DTOGenerator\obj\Debug\Gurucore.DTOGenerator.CodeViewer.resources
+D:\Projects\FR50\Source\Gurucore.DTOGenerator\bin\Debug\StringTemplate.dll
+D:\Projects\FR50\Source\Gurucore.DTOGenerator\bin\Debug\antlr.runtime.dll
+D:\Projects\FR50\Source\Gurucore.DTOGenerator\bin\Debug\TemplateEngine.dll

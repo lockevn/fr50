@@ -58,8 +58,8 @@ namespace Gurucore.Framework.Core.Factory
 
 			foreach (XmlNode oItemNode in arrItemNodes)
 			{
-				XmlBinder<T> oXmlBinder = new XmlBinder<T>((XmlElement)oItemNode);
-				T oItem = oXmlBinder.Load();
+				XmlBinder<T> oXmlBinder = new XmlBinder<T>();
+				T oItem = oXmlBinder.Load((XmlElement)oItemNode);
 
 				if (m_sMergeKey.NullOrEmpty())
 				{

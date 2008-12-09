@@ -30,4 +30,6 @@
 		<city population="5000000" is_capital="true">Tapei</city>
 		<city population="2000000" is_capital="false">Kaohsiung</city>
 	</country>
+	<important_year>1945</important_year>
+	<important_year>2000</important_year>
 </world>

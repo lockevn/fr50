@@ -8,7 +8,7 @@ using Gurucore.Framework.Core.Configuration;
 
 namespace Gurucore.Framework.DataAccess
 {
-	[XmClass("data_access")]
+	[XmlClass("data_access")]
 	public class DataAccessConfiguration : ConfigurationBase
 	{
 		private string m_sSqlGeneratorAssembly;

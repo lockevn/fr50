@@ -29,6 +29,14 @@ namespace Gurucore.Framework.Core
 			set { m_sWorkingDirectory = value; }
 		}
 
+		private string m_sMainConfigFile;
+
+		public string MainConfigFile
+		{
+			get { return m_sMainConfigFile; }
+			set { m_sMainConfigFile = value; }
+		}
+
 		private Application()
 		{
 			m_dicGlobalSharedObjects = new Dictionary<string, object>();
@@ -46,17 +54,24 @@ namespace Gurucore.Framework.Core
 			return m_oInstance;
 		}
 
-		public void AddGlobalSharedObject(string p_sName, object p_oObject)
+		public void SetGlobalSharedObject(string p_sName, object p_oObject)
 		{
 			lock (m_oLockInstance)
 			{
-				m_dicGlobalSharedObjects.Add(p_sName, p_oObject);
+				if (m_dicGlobalSharedObjects.ContainsKey(p_sName))
+				{
+					m_dicGlobalSharedObjects[p_sName] = p_oObject;
+				}
+				else
+				{
+					m_dicGlobalSharedObjects.Add(p_sName, p_oObject);
+				}
 			}
 		}
 
-		public void AddGlobalSharedObject(object p_oObject)
+		public void SetGlobalSharedObject(object p_oObject)
 		{
-			this.AddGlobalSharedObject(p_oObject.GetType().FullName, p_oObject);
+			this.SetGlobalSharedObject(p_oObject.GetType().FullName, p_oObject);
 		}
 
 		public object GetGlobalSharedObject(string p_sName)
@@ -89,7 +104,7 @@ namespace Gurucore.Framework.Core
 			return this.GetGlobalSharedObject<T>(typeof(T).FullName);
 		}
 
-		public void AddThreadSharedObject(string p_sName, object p_oObject)
+		public void SetThreadSharedObject(string p_sName, object p_oObject)
 		{
 			LocalDataStoreSlot oSlot = Thread.GetNamedDataSlot(THREAD_SHARED_OBJECTS_SLOT_NAME);
 			Dictionary<string, object> dicThreadSharedObjects;
@@ -113,9 +128,9 @@ namespace Gurucore.Framework.Core
 			}
 		}
 
-		public void AddThreadSharedObject(object p_oObject)
+		public void SetThreadSharedObject(object p_oObject)
 		{
-			this.AddThreadSharedObject(p_oObject.GetType().FullName, p_oObject);
+			this.SetThreadSharedObject(p_oObject.GetType().FullName, p_oObject);
 		}
 
 		public object GetThreadSharedObject(string p_sName)
@@ -172,11 +187,11 @@ namespace Gurucore.Framework.Core
 
 			//create Dynamic Activator
 			DynamicActivator oDynActivator = new DynamicActivator();
-			this.AddGlobalSharedObject(oDynActivator);
+			this.SetGlobalSharedObject(oDynActivator);
 
 			//create JITClassManager
 			JITClassManager oJITClassManager = new JITClassManager();
-			this.AddGlobalSharedObject(oJITClassManager);
+			this.SetGlobalSharedObject(oJITClassManager);
 
 			//load application config
 			string sCodeBase = Assembly.GetExecutingAssembly().CodeBase;
@@ -218,11 +233,12 @@ namespace Gurucore.Framework.Core
 			}
 
 			sConfigFilePath = oConfigDir.GetFiles("Config.xml")[0].FullName;
-			ConfigurationLoader oConfigLoader = new ConfigurationLoader(sConfigFilePath);
+			this.MainConfigFile = sConfigFilePath;
+			ConfigurationIOManager oConfigLoader = new ConfigurationIOManager(sConfigFilePath);
 			List<ConfigurationBase> arrConfig = oConfigLoader.Load();
 			foreach (ConfigurationBase oConfig in arrConfig)
 			{
-				m_oInstance.AddGlobalSharedObject(oConfig);
+				m_oInstance.SetGlobalSharedObject(oConfig);
 			}
 
 			//initialize capability

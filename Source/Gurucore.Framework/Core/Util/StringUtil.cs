@@ -19,7 +19,14 @@ namespace Gurucore.Framework.Core.Util
 				{
 					if (i > 0)
 					{
-						sLower.Append(new char[] { '_', (char)(c + 32) });
+						if ((p_sCamel[i - 1] >= 'A') && (p_sCamel[i - 1] <= 'Z'))
+						{
+							sLower.Append((char)(c + 32));
+						}
+						else
+						{
+							sLower.Append(new char[] { '_', (char)(c + 32) });
+						}
 					}
 					else
 					{

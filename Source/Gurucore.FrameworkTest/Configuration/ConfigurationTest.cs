@@ -14,7 +14,7 @@ namespace Gurucore.FrameworkTest.Configuration
 		[TestCase]
 		public void LoadConfig()
 		{
-			ConfigurationLoader oConfigLoader = new ConfigurationLoader("Configuration/Config4Test.xml");
+			ConfigurationIOManager oConfigLoader = new ConfigurationIOManager("Configuration/Config4Test.xml");
 			List<ConfigurationBase> arrConfig = oConfigLoader.Load();
 		}
 	}

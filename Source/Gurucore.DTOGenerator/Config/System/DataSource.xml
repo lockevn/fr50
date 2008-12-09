@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <data_sources caller_assembly_id="04a14371-ecf6-4535-9e94-f40ed6488680">
-	<data_source name="fr50@mars">
+	<data_source name="fr50">
 		<provider>MySql</provider>
 		<table_prefix>test_</table_prefix>
 		<date_time_format>yyyy-MM-dd hh:mm:ss</date_time_format>

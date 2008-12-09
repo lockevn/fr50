@@ -73,6 +73,8 @@ namespace Gurucore.Framework.Core.JITGeneration
 							oParameters.ReferencedAssemblies.Add(this.GetType().Assembly.CodeBase.Substring(URI_OFFSET));
 						}
 
+						oParameters.GenerateInMemory = false;
+
 						CompilerResults oResults = oProvider.CompileAssemblyFromSource(oParameters, p_sCode);
 						Assembly oAssembly = oResults.CompiledAssembly;
 						Type oType = oAssembly.GetType(p_sClassName);

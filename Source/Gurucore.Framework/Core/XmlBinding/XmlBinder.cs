@@ -12,57 +12,49 @@ namespace Gurucore.Framework.Core.XmlBinding
 {
 	public class XmlBinder<T> where T : class
 	{
-		private XmlElement m_oRootElement;
 		private Type m_oRootType;
 
-		public XmlBinder(string p_sFileName)
+		public XmlBinder()
 		{
+		}
+
+		public XmlBinder(Type p_oRootType) 
+		{
+			m_oRootType = p_oRootType;
+		}
+
+		public virtual T Load(string p_sFileName)
+		{			
 			XmlTextReader oXmlReader = new XmlTextReader(p_sFileName);
 			XmlDocument oXmlDoc = new XmlDocument();
 			oXmlDoc.Load(oXmlReader);
-			m_oRootElement = oXmlDoc.DocumentElement;
+			XmlElement oRootElement = oXmlDoc.DocumentElement;
 			oXmlReader.Close();
+
+			return this.Load(oRootElement);
 		}
 
-		public XmlBinder(XmlElement p_oRootElement)
-		{
-			m_oRootElement = p_oRootElement;
-		}
-
-		//For non-generic use, when T is object
-		public XmlBinder(string p_sFileName, Type p_oRootType) 
-			: this(p_sFileName)
-		{
-			m_oRootType = p_oRootType;
-		}
-
-		public XmlBinder(XmlElement p_oRootElement, Type p_oRootType)
-			: this(p_oRootElement)
-		{
-			m_oRootType = p_oRootType;
-		}
-
-		public virtual T Load()
+		public virtual T Load(XmlElement p_oRootElement)
 		{
 			if (typeof(T) == typeof(object))
 			{
 				//non-generic use
-				return UnMarshal(m_oRootElement, m_oRootType) as T;
+				return UnMarshal(p_oRootElement, m_oRootType) as T;
 			}
 			else
 			{
 				//generic use
-				return UnMarshal(m_oRootElement, typeof(T)) as T;
+				return UnMarshal(p_oRootElement, typeof(T)) as T;
 			}
 		}
 
 		protected virtual object UnMarshal(XmlElement p_oXmlElement, Type p_oType)
 		{
-			object[] arrClassAttr = p_oType.GetCustomAttributes(typeof(XmClassAttribute), false);
+			object[] arrClassAttr = p_oType.GetCustomAttributes(typeof(XmlClassAttribute), false);
 			if (arrClassAttr.Length > 0)
 			{
 				object oInstance = Activator.CreateInstance(p_oType);
-				string sElementName = ((XmClassAttribute)arrClassAttr[0]).ElementName;
+				string sElementName = ((XmlClassAttribute)arrClassAttr[0]).ElementName;
 				if (sElementName.NullOrEmpty())
 				{
 					sElementName = p_oType.Name.CamelToLower();
@@ -73,7 +65,7 @@ namespace Gurucore.Framework.Core.XmlBinding
 					PropertyInfo[] arrProp = p_oType.GetProperties();
 					foreach (PropertyInfo oProp in arrProp)
 					{
-						object[] arrPropAttr = oProp.GetCustomAttributes(typeof(XmlPropertyAttribute), false);
+						object[] arrPropAttr = oProp.GetCustomAttributes(typeof(XmlPropertyAttribute), true);
 						if (arrPropAttr.Length > 0)
 						{
 							XmlPropertyType eType = ((XmlPropertyAttribute)arrPropAttr[0]).Type;
@@ -178,6 +170,122 @@ namespace Gurucore.Framework.Core.XmlBinding
 			else
 			{
 				return Convert.ChangeType(p_oXmlElement.InnerText, p_oType);
+			}
+		}
+
+		public virtual XmlElement Unload(T p_oObject, string p_sFileName)
+		{
+			XmlDocument oXmlDoc = new XmlDocument();
+
+			XmlNode oDeclareNode = oXmlDoc.CreateNode(XmlNodeType.XmlDeclaration, "", "");
+			oXmlDoc.AppendChild(oDeclareNode);
+
+			XmlElement oRootElement = this.Unload(p_oObject, oXmlDoc);
+			oXmlDoc.AppendChild(oRootElement);
+
+			oXmlDoc.Save(p_sFileName);
+			return oRootElement;
+		}
+
+		public virtual XmlElement Unload(T p_oObject, XmlDocument p_oXmlDoc)
+		{
+			if (typeof(T) == typeof(object))
+			{
+				//non-generic use
+				return Marshal(p_oObject, m_oRootType, p_oXmlDoc);
+			}
+			else
+			{
+				//generic use
+				return Marshal(p_oObject, typeof(T), p_oXmlDoc);
+			}
+		}
+
+		protected XmlElement Marshal(object p_oObject, Type p_oType, XmlDocument p_oXmlDoc)
+		{
+			object[] arrXmlClassAttr = p_oType.GetCustomAttributes(typeof(XmlClassAttribute), true);
+			if (arrXmlClassAttr.Length > 0)
+			{
+				string sElementName = ((XmlClassAttribute)arrXmlClassAttr[0]).ElementName;
+				if (sElementName.NullOrEmpty())
+				{
+					sElementName = p_oType.Name.CamelToLower();
+				}
+				XmlElement oElement = p_oXmlDoc.CreateElement(sElementName);
+
+				PropertyInfo[] arrProperty = p_oType.GetProperties();
+				foreach (PropertyInfo oProperty in arrProperty)
+				{
+					object[] arrXmlPropAttr = oProperty.GetCustomAttributes(typeof(XmlPropertyAttribute), true);
+					object[] arrXmlSubSeqAttr = oProperty.GetCustomAttributes(typeof(XmlSubSequenceAttribute), true);
+					if (arrXmlPropAttr.Length > 0)
+					{
+						XmlPropertyAttribute oPropAttr = (XmlPropertyAttribute)arrXmlPropAttr[0];
+						string sPropName = oPropAttr.Name;
+						if (sPropName.NullOrEmpty())
+						{
+							sPropName = oProperty.Name.CamelToLower();
+						}
+						switch (oPropAttr.Type)
+						{
+							case XmlPropertyType.Attribute:
+								oElement.SetAttribute(sPropName, oProperty.GetValue(p_oObject, null).ToString());
+								break;
+							case XmlPropertyType.InnerText:
+								oElement.InnerText = oProperty.GetValue(p_oObject, null).ToString();
+								break;
+							case XmlPropertyType.NestedElement:
+								object[] arrXmlClassAttrSub = oProperty.PropertyType.GetCustomAttributes(typeof(XmlClassAttribute), true);
+								if (arrXmlClassAttrSub.Length > 0)
+								{
+									oElement.AppendChild(this.Marshal(oProperty.GetValue(p_oObject, null), oProperty.PropertyType, p_oXmlDoc));
+								}
+								else
+								{
+									XmlElement oSubElement = p_oXmlDoc.CreateElement(sPropName);
+									oSubElement.InnerText = oProperty.GetValue(p_oObject, null).ToString();
+									oElement.AppendChild(oSubElement);
+								}
+								break;
+						}
+					}
+					else if (arrXmlSubSeqAttr.Length > 0)
+					{
+						object oPropValue = oProperty.GetValue(p_oObject, null);
+						if ((oProperty.PropertyType.IsGenericType) && (oProperty.PropertyType.GetGenericTypeDefinition() == typeof(List<>))) //List<>
+						{
+							int nCount = (int)oProperty.PropertyType.GetProperty("Count").GetValue(oPropValue, null);
+							MethodInfo oGetItemMethod = oProperty.PropertyType.GetMethod("get_Item");
+							for (int nIndex = 0; nIndex < nCount; nIndex++)
+							{
+								object oItem = oGetItemMethod.Invoke(oPropValue, new object[] { nIndex });
+								//check for primitive subsequence
+								//recursive marshal
+								oElement.AppendChild(this.Marshal(oItem, oItem.GetType() ,p_oXmlDoc));
+							}
+						}
+						else if ((oProperty.PropertyType.IsGenericType) && (oProperty.PropertyType.GetGenericTypeDefinition() == typeof(Dictionary<,>))) //Dictionary
+						{
+							object oEnumerator = oProperty.PropertyType.GetMethod("GetEnumerator").Invoke(oPropValue, null);
+							MethodInfo oNextMethod = oEnumerator.GetType().GetMethod("MoveNext");
+							PropertyInfo oCurrentProperty = oEnumerator.GetType().GetProperty("Current");
+
+							while ((bool)oNextMethod.Invoke(oEnumerator, null))
+							{
+								object oItem = oCurrentProperty.GetValue(oEnumerator, null);
+								object oKey = oItem.GetType().GetProperty("Key").GetValue(oItem, null);
+								object oValue = oItem.GetType().GetProperty("Value").GetValue(oItem, null);
+								oElement.AppendChild(this.Marshal(oValue, oValue.GetType(), p_oXmlDoc));
+							}
+						}
+					}
+				}
+
+				return oElement;
+			}
+			else
+			{
+				return null;
 			}
 		}
 	}

@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="StringTemplate, Version=3.0.1.6846, Culture=neutral, PublicKeyToken=beee492b52c41e85, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Components\StringTemplate.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -49,8 +53,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Business\ClassInfo.cs" />
+    <Compile Include="Business\PropertyInfo.cs" />
     <Compile Include="Business\SchemaService.cs" />
-    <Compile Include="Business\TemplateWeaver.cs" />
+    <Compile Include="Business\TemplateService.cs" />
+    <Compile Include="CodeViewer.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CodeViewer.Designer.cs">
+      <DependentUpon>CodeViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Options.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Options.Designer.cs">
+      <DependentUpon>Options.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DTOGeneratorConfiguration.cs" />
+    <Compile Include="DTO\Column.cs" />
+    <Compile Include="DTO\KeyColumnUsage.cs" />
+    <Compile Include="DTO\TableConstraint.cs" />
     <Compile Include="DTO\Table.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -60,6 +82,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CodeViewer.resx">
+      <DependentUpon>CodeViewer.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Options.resx">
+      <DependentUpon>Options.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -83,17 +113,24 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="TypeMapping.cs" />
+    <Compile Include="TypeMappingSet.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Config\System\Config.xml" />
     <Content Include="Config\System\DataProvider.xml" />
     <Content Include="Config\System\DataSource.xml" />
+    <Content Include="Template\DTO.tpl" />
+    <Content Include="Template\PONO.tpl" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Gurucore.Framework\Gurucore.Framework.csproj">
       <Project>{7DD3B05A-39BF-4D48-8481-2ED9F7714554}</Project>
       <Name>Gurucore.Framework</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="bin\Debug\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

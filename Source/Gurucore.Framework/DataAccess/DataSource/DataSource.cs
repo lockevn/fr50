@@ -8,7 +8,7 @@ using Gurucore.Framework.Core.XmlBinding;
 
 namespace Gurucore.Framework.DataAccess.DataSource
 {
-	[XmClass]
+	[XmlClass]
 	public class DataSource : FactoryItemBase
 	{
 		private string m_sProvider;

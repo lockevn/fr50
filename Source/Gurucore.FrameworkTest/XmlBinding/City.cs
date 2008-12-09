@@ -7,7 +7,7 @@ using Gurucore.Framework.Core.XmlBinding;
 
 namespace Gurucore.FrameworkTest.XmlBinding
 {
-	[XmClass]
+	[XmlClass]
 	public class City
 	{
 		private String m_sName;
